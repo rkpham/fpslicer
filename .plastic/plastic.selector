@@ -1,0 +1,4 @@
+repository "FPSlicer/FPSlicer@1374573611287@cloud"
+  path "/"
+    br "/main"
+    co "/main"
