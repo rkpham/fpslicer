@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack2",
+                    "name": "Block",
                     "type": "Button",
                     "id": "615de4b4-d10e-4d39-be00-0b9b5a7dbe6f",
                     "expectedControlType": "",
@@ -51,16 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
-                    "type": "Button",
-                    "id": "7c02d6a2-a00a-4028-931e-bf04c0b6b1fb",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Trick",
+                    "name": "Flourish",
                     "type": "Button",
                     "id": "ef362ac8-b534-4f69-8d00-6836f766cac0",
                     "expectedControlType": "",
@@ -182,34 +173,12 @@
                 },
                 {
                     "name": "",
-                    "id": "2586557b-432f-408f-a2cc-dbf997f468ee",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "644c962b-d70f-40f7-8f63-16737f5cbc35",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "62b97c77-4abd-483a-b787-e6b326c5920b",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Trick",
+                    "action": "Flourish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -220,7 +189,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Trick",
+                    "action": "Flourish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -253,7 +222,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Attack2",
+                    "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -264,7 +233,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Attack2",
+                    "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -2,17 +2,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public enum State
-{
-    Idle,
-    Walking,
-    Dashing,
-    Airborne
-}
-
 public class Player : MonoBehaviour
 {
     public EntityData EntityData;
+    public Animator Animator;
 
     [SerializeField] Transform _orientation;
     [SerializeField] PlayerCamera _camera;
@@ -25,15 +18,31 @@ public class Player : MonoBehaviour
 
     InputSystemActions inputSystemActions;
     InputAction moveInput;
+    InputAction attackInput;
+    InputAction blockInput;
+    InputAction jumpInput;
+    InputAction flourishInput;
     Vector2 moveInputValue;
+    bool attacking;
+    bool blocking;
+    bool jumping;
+    bool flourishing;
 
     private void OnEnable()
     {
         moveInput.Enable();
+        attackInput.Enable();
+        blockInput.Enable();
+        jumpInput.Enable();
+        flourishInput.Enable();
     }
     private void OnDisable()
     {
         moveInput.Disable();
+        attackInput.Disable();
+        blockInput.Disable();
+        jumpInput.Disable();
+        flourishInput.Disable();
     }
     void Awake()
     {
@@ -43,6 +52,18 @@ public class Player : MonoBehaviour
         moveInput = inputSystemActions.Player.Move;
         moveInput.performed += PerformedMoveInput;
         moveInput.canceled += CanceledMoveInput;
+        attackInput = inputSystemActions.Player.Attack;
+        attackInput.performed += PerformedAttackInput;
+        attackInput.canceled += CanceledAttackInput;
+        blockInput = inputSystemActions.Player.Block;
+        blockInput.performed += PerformedBlockInput;
+        blockInput.canceled += CanceledBlockInput;
+        jumpInput = inputSystemActions.Player.Jump;
+        jumpInput.performed += PerformedJumpInput;
+        jumpInput.canceled += CanceledJumpInput;
+        flourishInput = inputSystemActions.Player.Flourish;
+        jumpInput.performed += PerformedJumpInput;
+        jumpInput.canceled += CanceledJumpInput;
     }
     void Update()
     {
@@ -65,6 +86,42 @@ public class Player : MonoBehaviour
     void CanceledMoveInput(InputAction.CallbackContext ctx)
     {
         moveInputValue = Vector2.zero;
+    }
+    void PerformedAttackInput(InputAction.CallbackContext ctx)
+    {
+        
+    }
+    void CanceledAttackInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void PerformedBlockInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void CanceledBlockInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void PerformedJumpInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void CanceledJumpInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void PerformedFlourishInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void CanceledFlourishInput(InputAction.CallbackContext ctx)
+    {
+
+    }
+    void TryAttack()
+    {
+
     }
     void HandleMovement()
     {
