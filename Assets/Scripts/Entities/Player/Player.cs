@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,6 +7,11 @@ public class Player : MonoBehaviour
 {
     public EntityData EntityData;
     public Animator Animator;
+
+    public float MaxSpeed;
+    public float MoveForce;
+    public float JumpForce;
+    public float JumpMoveForce;
 
     [SerializeField] Transform _orientation;
     [SerializeField] PlayerCamera _camera;
@@ -27,6 +33,13 @@ public class Player : MonoBehaviour
     bool blocking;
     bool jumping;
     bool flourishing;
+
+    bool canAttack = true;
+    bool canBlock = true;
+    bool canJump = true;
+    bool canFlourish = true;
+
+    float attackTimeLeft;
 
     private void OnEnable()
     {
@@ -72,12 +85,34 @@ public class Player : MonoBehaviour
     {
         GetGrounded();
         HandleMovement();
+        LimitMovement();
+        HandleActions();
     }
     void GetGrounded()
     {
         RaycastHit hit;
         Physics.Raycast(_groundedRayStart.position, _groundedRayEnd.position, out hit);
         _isGrounded = hit.collider != null;
+    }
+    void HandleMovement()
+    {
+        Vector3 moveDirection = _orientation.forward * moveInputValue.y + _orientation.right * moveInputValue.x;
+
+        rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * MoveForce, ForceMode.Force);
+    }
+    void LimitMovement()
+    {
+        Vector3 horizVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        if (horizVelocity.magnitude > MaxSpeed)
+        {
+            Vector3 limitedHorizVelocity = horizVelocity.normalized * MaxSpeed;
+            rb.linearVelocity = new Vector3(limitedHorizVelocity.x, rb.linearVelocity.y, limitedHorizVelocity.z);
+        }
+    }
+    void HandleActions()
+    {
+
     }
     void PerformedMoveInput(InputAction.CallbackContext ctx)
     {
@@ -89,7 +124,27 @@ public class Player : MonoBehaviour
     }
     void PerformedAttackInput(InputAction.CallbackContext ctx)
     {
-        
+        TryAttack();
+    }
+    void TryAttack()
+    {
+        if (canAttack)
+        {
+            Animator.SetTrigger("Attacking");
+        }
+    }
+    public void DoAttack()
+    {
+        RaycastHit raycastHit;
+        Debug.DrawRay(_camera.transform.position, _camera.transform.TransformDirection(_camera.transform.forward) * 2f, Color.red);
+        if (Physics.Raycast(_camera.transform.position, _camera.transform.TransformDirection(_camera.transform.forward), out raycastHit, 2f))
+        {
+            Debug.Log(raycastHit.point);
+        }
+    }
+    public void OnAttackFinished()
+    {
+
     }
     void CanceledAttackInput(InputAction.CallbackContext ctx)
     {
@@ -105,7 +160,11 @@ public class Player : MonoBehaviour
     }
     void PerformedJumpInput(InputAction.CallbackContext ctx)
     {
+        rb.AddForce(Vector3.up * JumpForce);
 
+        Vector3 moveDirection = _orientation.forward * moveInputValue.y + _orientation.right * moveInputValue.x;
+
+        rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * JumpMoveForce, ForceMode.Force);
     }
     void CanceledJumpInput(InputAction.CallbackContext ctx)
     {
@@ -119,14 +178,5 @@ public class Player : MonoBehaviour
     {
 
     }
-    void TryAttack()
-    {
-
-    }
-    void HandleMovement()
-    {
-        Vector3 moveDirection = _orientation.forward * moveInputValue.y + _orientation.right * moveInputValue.x;
-
-        rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed, ForceMode.Force);
-    }
+    
 }
