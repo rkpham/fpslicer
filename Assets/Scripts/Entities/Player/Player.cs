@@ -1,24 +1,34 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    public EntityData EntityData;
-    public Animator Animator;
+    public Animator ViewmodelAnim;
 
     public float MaxSpeed;
     public float MoveForce;
+    public float AirMoveForce;
     public float JumpForce;
     public float JumpMoveForce;
 
-    [SerializeField] Transform _orientation;
-    [SerializeField] PlayerCamera _camera;
-    [SerializeField] Transform _groundedRayStart;
-    [SerializeField] Transform _groundedRayEnd;
-    public bool IsGrounded => _isGrounded;
-    bool _isGrounded;
+    public ActionData BaseAttackData;
+    public ActionData BaseBlockData;
+    public ActionData BaseJumpData;
+    public ActionData BaseFlourishData;
+
+    [SerializeField] Transform orientation;
+    [SerializeField] PlayerCamera playerCamera;
+    [SerializeField] Transform groundedRayStart;
+    [SerializeField] Transform groundedRayEnd;
+    public bool IsGrounded => isGrounded;
+    bool isGrounded;
+    public bool CurrentlyBlocking = false;
+    private List<Collider> currentAttackColliders;
 
     Rigidbody rb;
 
@@ -28,18 +38,27 @@ public class Player : MonoBehaviour
     InputAction blockInput;
     InputAction jumpInput;
     InputAction flourishInput;
+    public Vector2 MoveInputValue => moveInputValue;
     Vector2 moveInputValue;
     bool attacking;
     bool blocking;
     bool jumping;
     bool flourishing;
+    float lastAttackTime;
+    float lastBlockTime;
+    float lastJumpTime;
+    float lastFlourishTime;
 
-    bool canAttack = true;
-    bool canBlock = true;
-    bool canJump = true;
-    bool canFlourish = true;
-
-    float attackTimeLeft;
+    ActionData currentActionData;
+    ActionStage currentActionStage;
+    ActionType currentActionType;
+    float windupTimeElapsed;
+    float chargeTimeElapsed;
+    float activeTimeElapsed;
+    float attackRecoveryTimeLeft;
+    float blockRecoveryTimeLeft;
+    float jumpRecoveryTimeLeft;
+    float flourishRecoveryTimeLeft;
 
     private void OnEnable()
     {
@@ -61,6 +80,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        // Connect all InputActions
         inputSystemActions = new InputSystemActions();
         moveInput = inputSystemActions.Player.Move;
         moveInput.performed += PerformedMoveInput;
@@ -88,17 +108,98 @@ public class Player : MonoBehaviour
         LimitMovement();
         HandleActions();
     }
+    void PerformedMoveInput(InputAction.CallbackContext ctx)
+    {
+        moveInputValue = ctx.ReadValue<Vector2>();
+    }
+    void CanceledMoveInput(InputAction.CallbackContext ctx)
+    {
+        moveInputValue = Vector2.zero;
+    }
+    void PerformedAttackInput(InputAction.CallbackContext ctx)
+    {
+        if (attackRecoveryTimeLeft > 0)
+            return;
+
+        attacking = true;
+        lastAttackTime = Time.time;
+        if (currentActionData == null)
+        {
+            StartActionWindup(BaseAttackData, ActionType.Attack);
+        }
+    }
+    void CanceledAttackInput(InputAction.CallbackContext ctx)
+    {
+        attacking = false;
+    }
+    void PerformedBlockInput(InputAction.CallbackContext ctx)
+    {
+        if (blockRecoveryTimeLeft > 0)
+            return;
+
+        blocking = true;
+        lastBlockTime = Time.time;
+        if (currentActionData == null)
+        {
+            StartActionWindup(BaseBlockData, ActionType.Block);
+        }
+    }
+    void CanceledBlockInput(InputAction.CallbackContext ctx)
+    {
+        blocking = false;
+    }
+    void PerformedJumpInput(InputAction.CallbackContext ctx)
+    {
+        if (jumpRecoveryTimeLeft > 0)
+            return;
+
+        jumping = true;
+        lastBlockTime = Time.time;
+        if (currentActionData == null)
+        {
+            StartActionWindup(BaseJumpData, ActionType.Jump);
+        }
+    }
+    void CanceledJumpInput(InputAction.CallbackContext ctx)
+    {
+        jumping = false;
+    }
+    void PerformedFlourishInput(InputAction.CallbackContext ctx)
+    {
+        if (flourishRecoveryTimeLeft > 0)
+            return;
+
+        flourishing = true;
+        lastFlourishTime = Time.time;
+        if (currentActionData == null)
+        {
+            StartActionWindup(BaseFlourishData, ActionType.Flourish);
+        }
+    }
+    void CanceledFlourishInput(InputAction.CallbackContext ctx)
+    {
+        flourishing = false;
+    }
     void GetGrounded()
     {
         RaycastHit hit;
-        Physics.Raycast(_groundedRayStart.position, _groundedRayEnd.position, out hit);
-        _isGrounded = hit.collider != null;
+        Physics.Raycast(groundedRayStart.position, groundedRayEnd.TransformDirection(groundedRayEnd.position), out hit, 0.3f);
+        isGrounded = hit.collider != null;
     }
     void HandleMovement()
     {
-        Vector3 moveDirection = _orientation.forward * moveInputValue.y + _orientation.right * moveInputValue.x;
+        Vector3 moveDirection = orientation.forward * moveInputValue.y + orientation.right * moveInputValue.x;
 
-        rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * MoveForce, ForceMode.Force);
+        if (isGrounded)
+        {
+            rb.linearDamping = 3f;
+            rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * MoveForce, ForceMode.Force);
+        }
+        else
+        {
+            rb.linearDamping = 0f;
+            rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * AirMoveForce, ForceMode.Force);
+        }
     }
     void LimitMovement()
     {
@@ -112,71 +213,224 @@ public class Player : MonoBehaviour
     }
     void HandleActions()
     {
+        bool stillCharging = false;
 
-    }
-    void PerformedMoveInput(InputAction.CallbackContext ctx)
-    {
-        moveInputValue = ctx.ReadValue<Vector2>();
-    }
-    void CanceledMoveInput(InputAction.CallbackContext ctx)
-    {
-        moveInputValue = Vector2.zero;
-    }
-    void PerformedAttackInput(InputAction.CallbackContext ctx)
-    {
-        TryAttack();
-    }
-    void TryAttack()
-    {
-        if (canAttack)
+        if (attackRecoveryTimeLeft > 0)
+            attackRecoveryTimeLeft -= Time.fixedDeltaTime;
+        if (blockRecoveryTimeLeft > 0)
+            blockRecoveryTimeLeft -= Time.fixedDeltaTime;
+        if (jumpRecoveryTimeLeft > 0)
+            jumpRecoveryTimeLeft -= Time.fixedDeltaTime;
+        if (flourishRecoveryTimeLeft > 0)
+            flourishRecoveryTimeLeft -= Time.fixedDeltaTime;
+
+        if (currentActionData == null)
+            return;
+
+        switch (currentActionStage)
         {
-            Animator.SetTrigger("Attacking");
+            case ActionStage.Windup:
+                windupTimeElapsed += Time.fixedDeltaTime;
+                if (currentActionData.ActiveLength == -1)
+                {
+                    if (windupTimeElapsed >= ViewmodelAnim.GetCurrentAnimatorStateInfo(0).length)
+                    {
+                        StartActionCharge();
+                    }
+                }
+                else if (windupTimeElapsed >= currentActionData.WindupLength)
+                {
+                    StartActionCharge();
+                }
+                break;
+            case ActionStage.Charge:
+                chargeTimeElapsed += Time.fixedDeltaTime;
+
+                switch (currentActionType)
+                {
+                    case ActionType.Attack:
+                        stillCharging = attacking;
+                        break;
+                    case ActionType.Block:
+                        stillCharging = blocking;
+                        break;
+                    case ActionType.Jump:
+                        stillCharging = jumping;
+                        break;
+                    case ActionType.Flourish:
+                        stillCharging = flourishing;
+                        break;
+                }
+                if (stillCharging)
+                {
+                    if (chargeTimeElapsed >= currentActionData.MaxChargeLength && currentActionData.MaxChargeLength > 0)
+                    {
+                        if (currentActionData.ManualActive)
+                        {
+                            FinishAction();
+                        }
+                        else
+                        {
+                            StartActionActive();
+                        }
+                    }
+                }
+                else
+                {
+                    if (currentActionData.ManualActive)
+                    {
+                        FinishAction();
+                    }
+                    else if (currentActionData.LowChargeDefault && chargeTimeElapsed < currentActionData.ChargeThreshold)
+                    {
+                        StartActionWindup(currentActionData.LowChargeDefault, currentActionType);
+                    }
+                    else
+                    {
+                        StartActionActive();
+                    }
+                }
+                break;
+            case ActionStage.Active:
+                activeTimeElapsed += Time.fixedDeltaTime;
+                if (currentActionData.ActiveLength == -1)
+                {
+                    if (activeTimeElapsed >= ViewmodelAnim.GetCurrentAnimatorStateInfo(0).length)
+                    {
+                        if (currentActionData.RepeatCharge)
+                        {
+                            StartActionCharge();
+                        }
+                        else
+                        {
+                            FinishAction();
+                        }
+                    }
+                }
+                else if (activeTimeElapsed >= currentActionData.ActiveLength)
+                {
+                    if (currentActionData.RepeatCharge)
+                    {
+                        StartActionCharge();
+                    }
+                    else
+                    {
+                        FinishAction();
+                    }
+                }
+                break;
         }
     }
-    public void DoAttack()
+    void StartActionWindup(ActionData actionData, ActionType actionType)
     {
-        RaycastHit raycastHit;
-        Debug.DrawRay(_camera.transform.position, _camera.transform.TransformDirection(_camera.transform.forward) * 2f, Color.red);
-        if (Physics.Raycast(_camera.transform.position, _camera.transform.TransformDirection(_camera.transform.forward), out raycastHit, 2f))
+        windupTimeElapsed = 0f;
+        chargeTimeElapsed = 0f;
+        activeTimeElapsed = 0f;
+        currentActionData = actionData;
+        currentActionType = actionType;
+        ViewmodelAnim.runtimeAnimatorController = actionData.AnimatorOverrideController;
+        currentActionData.OnActionWindupStarted(this);
+        if (currentActionData.WindupLength == 0)
         {
-            Debug.Log(raycastHit.point);
+            StartActionCharge();
+        }
+        else
+        {
+            currentActionStage = ActionStage.Windup;
+            if (currentActionData.AnimatorOverrideController)
+                ViewmodelAnim.Play("Windup", 0, 0f);
         }
     }
-    public void OnAttackFinished()
+    public void StartActionCharge()
     {
-
+        chargeTimeElapsed = 0f;
+        currentActionData.OnActionChargeStarted(this);
+        if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
+        {
+            StartActionActive();
+        }
+        else
+        {
+            currentActionStage = ActionStage.Charge;
+            if (currentActionData.AnimatorOverrideController)
+                ViewmodelAnim.Play("ChargeLoop", 0, 0f);
+        }
     }
-    void CanceledAttackInput(InputAction.CallbackContext ctx)
+    public void StartActionActive()
     {
-
+        activeTimeElapsed = 0f;
+        DoMeleeHit();
+        currentActionData.OnActionActiveStarted(this);
+        if (currentActionData.ActiveLength == 0)
+        {
+            FinishAction();
+        }
+        else
+        {
+            currentActionStage = ActionStage.Active;
+            if (currentActionData.AnimatorOverrideController)
+                ViewmodelAnim.Play("Active", 0, 0f);
+        }
     }
-    void PerformedBlockInput(InputAction.CallbackContext ctx)
+    void FinishAction()
     {
-
+        currentActionData.OnActionFinished(this);
+        if (currentActionData.AttackChain != null && Time.time - lastAttackTime <= currentActionData.AttackComboTimeFromEnd)
+        {
+            StartActionWindup(currentActionData.AttackChain, ActionType.Attack);
+        }
+        else if (currentActionData.BlockChain != null && Time.time - lastBlockTime <= currentActionData.BlockComboTimeFromEnd)
+        {
+            StartActionWindup(currentActionData.BlockChain, ActionType.Block);
+        }
+        else if (currentActionData.JumpChain != null && Time.time - lastJumpTime <= currentActionData.JumpComboTimeFromEnd)
+        {
+            StartActionWindup(currentActionData.JumpChain, ActionType.Jump);
+        }
+        else if (currentActionData.FlourishChain != null && Time.time - lastFlourishTime <= currentActionData.FlourishComboTimeFromEnd)
+        {
+            StartActionWindup(currentActionData.FlourishChain, ActionType.Flourish);
+        }
+        else
+        {
+            if (currentActionData.AnimatorOverrideController)
+                ViewmodelAnim.Play("Recovery", 0, 0f);
+            attackRecoveryTimeLeft = currentActionData.AttackRecoveryTime;
+            blockRecoveryTimeLeft = currentActionData.BlockRecoveryTime;
+            jumpRecoveryTimeLeft = currentActionData.JumpRecoveryTime;
+            flourishRecoveryTimeLeft = currentActionData.FlourishRecoveryTime;
+            currentActionData = null;
+        }
     }
-    void CanceledBlockInput(InputAction.CallbackContext ctx)
+    public void OnAttackTriggerEnter(Collider collider)
     {
-
+        currentAttackColliders.Add(collider);
     }
-    void PerformedJumpInput(InputAction.CallbackContext ctx)
+    public void OnAttackTriggerExit(Collider collider)
     {
-        rb.AddForce(Vector3.up * JumpForce);
-
-        Vector3 moveDirection = _orientation.forward * moveInputValue.y + _orientation.right * moveInputValue.x;
-
-        rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * JumpMoveForce, ForceMode.Force);
+        currentAttackColliders.Remove(collider);
     }
-    void CanceledJumpInput(InputAction.CallbackContext ctx)
+    public void DoMeleeHit()
     {
-
+        foreach (Collider collider in currentAttackColliders)
+        {
+            
+        }
     }
-    void PerformedFlourishInput(InputAction.CallbackContext ctx)
-    {
+}
 
-    }
-    void CanceledFlourishInput(InputAction.CallbackContext ctx)
-    {
+enum ActionType
+{
+    Attack,
+    Block,
+    Jump,
+    Flourish
+}
 
-    }
-    
+enum ActionStage
+{
+    Windup,
+    Charge,
+    Active,
+    Recovery
 }

@@ -8,18 +8,15 @@ public class EntityData : ScriptableObject
     public delegate void OnDied();
     public event OnDied onDied;
 
-    private const float _maxHealth = 100f;
-    private float _health = _maxHealth;
-    public float Health => _health;
-    private float _baseSpeed = 16.0f;
-    public float BaseSpeed => _baseSpeed;
+    public float MaxHealth = 100f;
+    public float Health = 100f;
+    public float BaseSpeed = 16.0f;
+    public bool Blocking = false;
     
-
-
     public void ApplyDamage(DamageInstance damageInstance)
     {
-        _health -= damageInstance.Amount;
-        if (_health < 0)
+        Health -= damageInstance.Amount;
+        if (Health < 0)
         {
             Die();
         }

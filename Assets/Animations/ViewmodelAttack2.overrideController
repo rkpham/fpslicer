@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ViewmodelAttack2
+  m_Controller: {fileID: 9100000, guid: 51501fa619aa9f54d8ecc2f0a637e5ff, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -1475643621742010713, guid: b5949b4dfa1acad4aa68e2a29096dfe2, type: 3}
+    m_OverrideClip: {fileID: -2078673841604751288, guid: b5949b4dfa1acad4aa68e2a29096dfe2, type: 3}
+  - m_OriginalClip: {fileID: 2927791724056790658, guid: b5949b4dfa1acad4aa68e2a29096dfe2, type: 3}
+    m_OverrideClip: {fileID: 6602104880648926608, guid: b5949b4dfa1acad4aa68e2a29096dfe2, type: 3}
