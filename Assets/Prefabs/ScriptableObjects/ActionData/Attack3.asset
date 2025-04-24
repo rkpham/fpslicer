@@ -19,7 +19,8 @@ MonoBehaviour:
   FlourishChain: {fileID: 0}
   InterruptImmediately: 0
   WindupLength: 0
-  ChargeLength: 0
+  ChargeThreshold: -1
+  MaxChargeLength: -1
   ActiveLength: -1
   AttackComboTimeFromEnd: 0.5
   BlockComboTimeFromEnd: 0
@@ -28,11 +29,14 @@ MonoBehaviour:
   AttackRecoveryTime: 0.5
   BlockRecoveryTime: 0
   JumpRecoveryTime: 0
-  FlourishRecoveryTime: 0
+  FlourishRecoveryTime: 0.5
   LowChargeDefault: {fileID: 0}
   CanCharge: 0
   RepeatCharge: 0
   IsAttack: 1
   Unblockable: 1
+  ManualActive: 0
+  Damage: 5
   StaminaDamage: 0.2
-  Pushback: 0.5
+  Pushback: 120
+  SpeedMult: 0.5

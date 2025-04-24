@@ -344,6 +344,8 @@ public class Player : Entity
         ViewmodelAnim.runtimeAnimatorController = actionData.AnimatorOverrideController;
         ResetAnimVariables();
         currentActionData.OnActionWindupStarted(this);
+        ViewmodelAnim.SetBool("CancelRecovery", true);
+
         if (currentActionData.WindupLength == 0)
         {
             if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
@@ -398,6 +400,7 @@ public class Player : Entity
     void FinishAction()
     {
         currentActionData.OnActionFinished(this);
+        ViewmodelAnim.SetBool("CancelRecovery", false);
         if (currentActionData.AttackChain != null && Time.time - lastAttackTime <= currentActionData.AttackComboTimeFromEnd)
         {
             ViewmodelAnim.SetTrigger("StartChain");
@@ -432,19 +435,16 @@ public class Player : Entity
     }
     public void OnAttackTriggerEnter(Collider collider)
     {
-        Debug.Log("enter");
         currentAttackColliders.Add(collider);
     }
     public void OnAttackTriggerExit(Collider collider)
     {
-        Debug.Log("exit");
         currentAttackColliders.Remove(collider);
     }
     public void DoMeleeHit()
     {
         foreach (Collider collider in currentAttackColliders)
         {
-            Debug.Log("Hitting");
             Entity entityComponent = collider.gameObject.GetComponent<Entity>();
             if (entityComponent != null)
             {
@@ -452,6 +452,7 @@ public class Player : Entity
                 damageInstance.Amount = currentActionData.Damage;
                 damageInstance.Stamina = currentActionData.StaminaDamage;
                 damageInstance.Pushback = currentActionData.Pushback;
+                damageInstance.Direction = orientation.forward;
 
                 entityComponent.ApplyDamage(damageInstance);
             }
@@ -460,8 +461,6 @@ public class Player : Entity
     public override void ApplyDamage(DamageInstance damageInstance)
     {
         base.ApplyDamage(damageInstance);
-
-        rb.AddForce(damageInstance.Direction * 16f);
     }
 }
 

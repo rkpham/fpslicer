@@ -19,13 +19,20 @@ public class Entity : MonoBehaviour
     }
     virtual public void ApplyDamage(DamageInstance damageInstance)
     {
-        Debug.Log("Took damage!");
-        Health -= damageInstance.Amount;
+        if (Blocking)
+        {
+            rb.AddForce(damageInstance.Direction * damageInstance.Pushback * 0.5f);
+        }
+        else
+        {
+            rb.AddForce(damageInstance.Direction * damageInstance.Pushback);
+            Health -= damageInstance.Amount;
+            onDamaged?.Invoke(damageInstance);
+        }
         if (Health < 0)
         {
             Die();
         }
-        onDamaged?.Invoke(damageInstance);
     }
     virtual public void Die()
     {

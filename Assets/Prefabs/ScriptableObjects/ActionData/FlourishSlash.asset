@@ -25,11 +25,11 @@ MonoBehaviour:
   AttackComboTimeFromEnd: 0.5
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
-  FlourishComboTimeFromEnd: 0
+  FlourishComboTimeFromEnd: 0.5
   AttackRecoveryTime: 0.5
   BlockRecoveryTime: 0
   JumpRecoveryTime: 0
-  FlourishRecoveryTime: 0
+  FlourishRecoveryTime: 0.5
   LowChargeDefault: {fileID: 0}
   CanCharge: 0
   RepeatCharge: 0
@@ -38,4 +38,5 @@ MonoBehaviour:
   ManualActive: 0
   Damage: 5
   StaminaDamage: 0.1
-  Pushback: 0.5
+  Pushback: 180
+  SpeedMult: 0.5

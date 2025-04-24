@@ -29,7 +29,7 @@ MonoBehaviour:
   AttackRecoveryTime: 0.5
   BlockRecoveryTime: 0
   JumpRecoveryTime: 0
-  FlourishRecoveryTime: 0
+  FlourishRecoveryTime: 0.5
   LowChargeDefault: {fileID: 0}
   CanCharge: 0
   RepeatCharge: 0
@@ -39,3 +39,4 @@ MonoBehaviour:
   Damage: 5
   StaminaDamage: 0.1
   Pushback: 0.5
+  SpeedMult: 0.5

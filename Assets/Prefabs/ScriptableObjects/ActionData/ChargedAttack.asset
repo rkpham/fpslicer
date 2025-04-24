@@ -38,4 +38,5 @@ MonoBehaviour:
   ManualActive: 0
   Damage: 5
   StaminaDamage: 0.25
-  Pushback: 1
+  Pushback: 600
+  SpeedMult: 0.5
