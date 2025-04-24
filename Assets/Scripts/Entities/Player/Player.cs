@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,12 +8,6 @@ using UnityEngine.InputSystem;
 public class Player : Entity
 {
     public Animator ViewmodelAnim;
-
-    public float MaxSpeed;
-    public float MoveForce;
-    public float AirMoveForce;
-    public float JumpForce;
-    public float JumpMoveForce;
 
     public ActionData BaseAttackData;
     public ActionData BaseBlockData;
@@ -28,7 +21,6 @@ public class Player : Entity
     public bool IsGrounded => isGrounded;
     bool isGrounded;
     public bool CurrentlyBlocking = false;
-    private List<Collider> currentAttackColliders = new List<Collider>();
 
     InputSystemActions inputSystemActions;
     InputAction moveInput;
@@ -188,26 +180,7 @@ public class Player : Entity
     {
         Vector3 moveDirection = orientation.forward * moveInputValue.y + orientation.right * moveInputValue.x;
 
-        if (isGrounded)
-        {
-            rb.linearDamping = 3f;
-            rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce, ForceMode.Force);
-        }
-        else
-        {
-            rb.linearDamping = 0f;
-            rb.AddForce(moveDirection.normalized * BaseSpeed * AirMoveForce, ForceMode.Force);
-        }
-    }
-    void LimitMovement()
-    {
-        Vector3 horizVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        if (horizVelocity.magnitude > MaxSpeed)
-        {
-            Vector3 limitedHorizVelocity = horizVelocity.normalized * MaxSpeed;
-            rb.linearVelocity = new Vector3(limitedHorizVelocity.x, rb.linearVelocity.y, limitedHorizVelocity.z);
-        }
+        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce, ForceMode.Force);
     }
     void HandleActions()
     {
@@ -384,8 +357,11 @@ public class Player : Entity
     public void StartActionActive()
     {
         activeTimeElapsed = 0f;
-        DoMeleeHit();
         currentActionData.OnActionActiveStarted(this);
+        if (currentActionData.IsAttack)
+        {
+            DoMeleeHit();
+        }
         if (currentActionData.ActiveLength == 0)
         {
             FinishAction();
@@ -433,14 +409,6 @@ public class Player : Entity
             currentActionData = null;
         }
     }
-    public void OnAttackTriggerEnter(Collider collider)
-    {
-        currentAttackColliders.Add(collider);
-    }
-    public void OnAttackTriggerExit(Collider collider)
-    {
-        currentAttackColliders.Remove(collider);
-    }
     public void DoMeleeHit()
     {
         foreach (Collider collider in currentAttackColliders)
@@ -453,6 +421,7 @@ public class Player : Entity
                 damageInstance.Stamina = currentActionData.StaminaDamage;
                 damageInstance.Pushback = currentActionData.Pushback;
                 damageInstance.Direction = orientation.forward;
+                damageInstance.Blockable = !currentActionData.Unblockable;
 
                 entityComponent.ApplyDamage(damageInstance);
             }

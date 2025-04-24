@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class AttackTrigger : MonoBehaviour
 {
-    public Player player;
+    public Entity entity;
 
     private void OnTriggerEnter(Collider other)
     {
-        player.OnAttackTriggerEnter(other);
+        entity.OnAttackTriggerEnter(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        player.OnAttackTriggerExit(other);
+        entity.OnAttackTriggerExit(other);
     }
 }
