@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+  m_SubtractiveShadowColor: {r: 0.12428801, g: 0.21175022, b: 0.5377358, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 2ed8228c9a241054caf9ab8da281e265, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: f7820ba5a06c6244398515f49f06083c, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1101,16 +1101,66 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 54e8daa17d042944a9ed13d9a09ba849, type: 2}
+    - target: {fileID: -2793727289926329592, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
       propertyPath: m_Name
       value: Colusseum
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507767883509144192, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587788796799408565, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779745573541866595, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137213011183333755, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -1923801705197588679, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2367837846713077492, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 923660085}
   m_SourcePrefab: {fileID: 100100000, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+--- !u!1 &923660084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2367837846713077492, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
+  m_PrefabInstance: {fileID: 923660083}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &923660085
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923660084}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8211372540250625004, guid: ed266f7fca32e5843bd33b12ff719468, type: 3}
 --- !u!1 &929555819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,8 +1325,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.7766222}
+  m_Center: {x: 0, y: 0, z: -0.111689806}
 --- !u!33 &1541428466
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class Boss : Entity
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Stage CurrentStage = Stage.First;
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public enum Stage
+{
+    First,
+    Second,
+    Third
 }
