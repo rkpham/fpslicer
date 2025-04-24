@@ -178,9 +178,10 @@ public class Player : Entity
     }
     void HandleMovement()
     {
+        MoveInfluence = Mathf.MoveTowards(MoveInfluence, 1f, Time.fixedDeltaTime);
         Vector3 moveDirection = orientation.forward * moveInputValue.y + orientation.right * moveInputValue.x;
 
-        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce * MoveInfluence, ForceMode.Force);
     }
     void HandleActions()
     {

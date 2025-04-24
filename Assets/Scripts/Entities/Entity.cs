@@ -14,6 +14,7 @@ public class Entity : MonoBehaviour
     public float BaseSpeed = 16.0f;
     public float MaxSpeed = 3f;
     public float MoveForce = 8f;
+    public float MoveInfluence = 1.0f;
     public bool Blocking = false;
 
     protected List<Collider> currentAttackColliders = new List<Collider>();
@@ -25,6 +26,7 @@ public class Entity : MonoBehaviour
     }
     virtual public void ApplyDamage(DamageInstance damageInstance)
     {
+        MoveInfluence = 0.0f;
         if (Blocking && damageInstance.Blockable)
         {
             rb.AddForce(damageInstance.Direction * damageInstance.Pushback * 0.5f);

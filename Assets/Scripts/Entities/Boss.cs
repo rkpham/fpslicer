@@ -27,7 +27,7 @@ public class Boss : Entity
 
         ModelRenderer.material.color = ModelRenderer.material.color + ((Color.white - ModelRenderer.material.color) * Time.deltaTime * 10f);
 
-        text.text = string.Format("Timer:{0}\nAgressiveness: {1}", tickTimer, aggressiveness);
+        text.text = string.Format("Timer:{0}\nAgressiveness: {1}\nStamina: {2}", tickTimer, aggressiveness, Stamina);
 
         if (aggressiveness < 10f)
         {
@@ -61,21 +61,27 @@ public class Boss : Entity
             Stamina += 0.1f;
         }
 
-        if (CurrentAction == CurrentAction.Wait)
+        bool doSomething = Random.Range(0f, 1f) > 0.5f;
+
+        if (doSomething)
         {
-            if (Stamina >= 0.9f)
+            if (CurrentAction == CurrentAction.Wait)
             {
-                StartCoroutine(DoChargeAttack());
-            }
-            else if (Stamina >= 0.3f)
-            {
-                StartCoroutine(DoAttack());
-            }
-            else if (Stamina >= 0.1f)
-            {
-                StartCoroutine(DoBlock());
+                if (Stamina >= 0.9f)
+                {
+                    StartCoroutine(DoChargeAttack());
+                }
+                else if (Stamina >= 0.3f)
+                {
+                    StartCoroutine(DoAttack());
+                }
+                else if (Stamina >= 0.1f)
+                {
+                    StartCoroutine(DoBlock());
+                }
             }
         }
+        
     }
     void StartStrafe()
     {
@@ -102,10 +108,11 @@ public class Boss : Entity
     }
     void ProcessMovement()
     {
+        MoveInfluence = Mathf.MoveTowards(MoveInfluence, 1f, Time.fixedDeltaTime);
         Vector3 moveDirection;
         moveDirection = Orientation.forward * strafeDirection.y + Orientation.right * strafeDirection.x;
 
-        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce * MoveInfluence, ForceMode.Force);
     }
     IEnumerator DoChargeAttack()
     {
@@ -118,7 +125,6 @@ public class Boss : Entity
         damageInstance.Pushback = 240f;
         damageInstance.Direction = Orientation.forward;
         damageInstance.Amount = 30f;
-
         DoMeleeHit(damageInstance);
         yield return new WaitForSeconds(1.99f);
         WeaponRenderer.enabled = false;
@@ -128,7 +134,7 @@ public class Boss : Entity
     IEnumerator DoAttack()
     {
         CurrentAction = CurrentAction.Attack;
-        Stamina -= 0.1f;
+        Stamina -= 0.3f;
         WeaponRenderer.enabled = true;
         yield return new WaitForSeconds(0.5f);
         DamageInstance damageInstance = new DamageInstance();
@@ -136,7 +142,6 @@ public class Boss : Entity
         damageInstance.Pushback = 120f;
         damageInstance.Direction = Orientation.forward;
         damageInstance.Amount = 10f;
-
         DoMeleeHit(damageInstance);
         yield return new WaitForSeconds(0.49f);
         WeaponRenderer.enabled = false;
@@ -144,6 +149,7 @@ public class Boss : Entity
     }
     IEnumerator DoBlock()
     {
+        Stamina -= 0.2f;
         Blocking = true;
         yield return new WaitForSeconds(0.5f);
         Blocking = false;
