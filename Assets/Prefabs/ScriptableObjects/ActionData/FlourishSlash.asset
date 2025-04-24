@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
+  m_Name: FlourishSlash
+  m_EditorClassIdentifier: 
+  AnimatorOverrideController: {fileID: 22100000, guid: 4dba0247e9e6a544f93ad4f1492bcded, type: 2}
+  AttackChain: {fileID: 0}
+  BlockChain: {fileID: 0}
+  JumpChain: {fileID: 0}
+  FlourishChain: {fileID: 0}
+  InterruptImmediately: 0
+  WindupLength: 0
+  ChargeThreshold: -1
+  MaxChargeLength: -1
+  ActiveLength: -1
+  AttackComboTimeFromEnd: 0.5
+  BlockComboTimeFromEnd: 0
+  JumpComboTimeFromEnd: 0
+  FlourishComboTimeFromEnd: 0
+  AttackRecoveryTime: 0.5
+  BlockRecoveryTime: 0
+  JumpRecoveryTime: 0
+  FlourishRecoveryTime: 0
+  LowChargeDefault: {fileID: 0}
+  CanCharge: 0
+  RepeatCharge: 0
+  IsAttack: 1
+  Unblockable: 0
+  ManualActive: 0
+  Damage: 5
+  StaminaDamage: 0.1
+  Pushback: 0.5
