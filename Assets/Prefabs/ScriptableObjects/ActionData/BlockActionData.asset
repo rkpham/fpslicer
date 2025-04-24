@@ -18,7 +18,7 @@ MonoBehaviour:
   JumpChain: {fileID: 0}
   FlourishChain: {fileID: 0}
   InterruptImmediately: 0
-  WindupLength: -1
+  WindupLength: 0
   ChargeThreshold: -1
   MaxChargeLength: -1
   ActiveLength: -1
@@ -36,5 +36,6 @@ MonoBehaviour:
   IsAttack: 0
   Unblockable: 0
   ManualActive: 1
+  Damage: 5
   StaminaDamage: 0.5
   Pushback: 0.5

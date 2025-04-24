@@ -31,8 +31,10 @@ public abstract class ActionData : ScriptableObject
     public bool IsAttack;
     public bool Unblockable;
     public bool ManualActive; // Active state must be triggered in code
+    public float Damage = 5f;
     public float StaminaDamage = 0.5f;
     public float Pushback = 0.5f;
+    public float SpeedMult = 0.5f;
     public abstract void OnActionWindupStarted(Player player);
     public abstract void OnActionChargeStarted(Player player);
     public abstract void OnActionActiveStarted(Player player);

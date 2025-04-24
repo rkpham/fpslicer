@@ -28,9 +28,7 @@ public class Player : Entity
     public bool IsGrounded => isGrounded;
     bool isGrounded;
     public bool CurrentlyBlocking = false;
-    private List<Collider> currentAttackColliders;
-
-    Rigidbody rb;
+    private List<Collider> currentAttackColliders = new List<Collider>();
 
     InputSystemActions inputSystemActions;
     InputAction moveInput;
@@ -95,8 +93,8 @@ public class Player : Entity
         jumpInput.performed += PerformedJumpInput;
         jumpInput.canceled += CanceledJumpInput;
         flourishInput = inputSystemActions.Player.Flourish;
-        jumpInput.performed += PerformedJumpInput;
-        jumpInput.canceled += CanceledJumpInput;
+        flourishInput.performed += PerformedFlourishInput;
+        flourishInput.canceled += CanceledFlourishInput;
     }
     void Update()
     {
@@ -193,12 +191,12 @@ public class Player : Entity
         if (isGrounded)
         {
             rb.linearDamping = 3f;
-            rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * MoveForce, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce, ForceMode.Force);
         }
         else
         {
             rb.linearDamping = 0f;
-            rb.AddForce(moveDirection.normalized * EntityData.BaseSpeed * AirMoveForce, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * BaseSpeed * AirMoveForce, ForceMode.Force);
         }
     }
     void LimitMovement()
@@ -231,7 +229,7 @@ public class Player : Entity
         {
             case ActionStage.Windup:
                 windupTimeElapsed += Time.fixedDeltaTime;
-                if (currentActionData.ActiveLength == -1)
+                if (currentActionData.WindupLength == -1)
                 {
                     if (windupTimeElapsed >= ViewmodelAnim.GetCurrentAnimatorStateInfo(0).length)
                     {
@@ -267,6 +265,7 @@ public class Player : Entity
                     {
                         if (currentActionData.ManualActive)
                         {
+                            ViewmodelAnim.SetBool("SkipActive", true);
                             FinishAction();
                         }
                         else
@@ -279,6 +278,7 @@ public class Player : Entity
                 {
                     if (currentActionData.ManualActive)
                     {
+                        ViewmodelAnim.SetBool("SkipActive", true);
                         FinishAction();
                     }
                     else if (currentActionData.LowChargeDefault && chargeTimeElapsed < currentActionData.ChargeThreshold)
@@ -299,6 +299,7 @@ public class Player : Entity
                     {
                         if (currentActionData.RepeatCharge)
                         {
+                            ViewmodelAnim.SetBool("RestartCharge", true);
                             StartActionCharge();
                         }
                         else
@@ -321,6 +322,18 @@ public class Player : Entity
                 break;
         }
     }
+    void ResetAnimVariables()
+    {
+        ViewmodelAnim.SetBool("StartWindup", false);
+        ViewmodelAnim.SetBool("StartCharge", false);
+        ViewmodelAnim.SetBool("StartActive", false);
+        ViewmodelAnim.SetBool("StartRecovery", false);
+        ViewmodelAnim.SetBool("RestartCharge", false);
+        ViewmodelAnim.SetBool("SkipWindup", false);
+        ViewmodelAnim.SetBool("SkipCharge", false);
+        ViewmodelAnim.SetBool("SkipActive", false);
+        ViewmodelAnim.SetBool("SkipWindupAndCharge", false);
+    }
     void StartActionWindup(ActionData actionData, ActionType actionType)
     {
         windupTimeElapsed = 0f;
@@ -329,16 +342,26 @@ public class Player : Entity
         currentActionData = actionData;
         currentActionType = actionType;
         ViewmodelAnim.runtimeAnimatorController = actionData.AnimatorOverrideController;
+        ResetAnimVariables();
         currentActionData.OnActionWindupStarted(this);
         if (currentActionData.WindupLength == 0)
         {
-            StartActionCharge();
+            if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
+            {
+                StartActionActive();
+                ViewmodelAnim.SetBool("SkipCharge", true);
+                ViewmodelAnim.SetBool("SkipWindupAndCharge", true);
+            }
+            else
+            {
+                StartActionCharge();
+                ViewmodelAnim.SetBool("SkipWindup", true);
+            }
         }
         else
         {
             currentActionStage = ActionStage.Windup;
-            if (currentActionData.AnimatorOverrideController)
-                ViewmodelAnim.Play("Windup", 0, 0f);
+            ViewmodelAnim.SetBool("StartWindup", true);
         }
     }
     public void StartActionCharge()
@@ -348,12 +371,12 @@ public class Player : Entity
         if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
         {
             StartActionActive();
+            ViewmodelAnim.SetBool("SkipCharge", true);
         }
         else
         {
             currentActionStage = ActionStage.Charge;
-            if (currentActionData.AnimatorOverrideController)
-                ViewmodelAnim.Play("ChargeLoop", 0, 0f);
+            ViewmodelAnim.SetBool("StartCharge", true);
         }
     }
     public void StartActionActive()
@@ -364,12 +387,12 @@ public class Player : Entity
         if (currentActionData.ActiveLength == 0)
         {
             FinishAction();
+            ViewmodelAnim.SetBool("SkipActive", true);
         }
         else
         {
             currentActionStage = ActionStage.Active;
-            if (currentActionData.AnimatorOverrideController)
-                ViewmodelAnim.Play("Active", 0, 0f);
+            ViewmodelAnim.SetBool("StartActive", true);
         }
     }
     void FinishAction()
@@ -377,24 +400,29 @@ public class Player : Entity
         currentActionData.OnActionFinished(this);
         if (currentActionData.AttackChain != null && Time.time - lastAttackTime <= currentActionData.AttackComboTimeFromEnd)
         {
+            ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.AttackChain, ActionType.Attack);
         }
         else if (currentActionData.BlockChain != null && Time.time - lastBlockTime <= currentActionData.BlockComboTimeFromEnd)
         {
+            ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.BlockChain, ActionType.Block);
         }
         else if (currentActionData.JumpChain != null && Time.time - lastJumpTime <= currentActionData.JumpComboTimeFromEnd)
         {
+            ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.JumpChain, ActionType.Jump);
         }
         else if (currentActionData.FlourishChain != null && Time.time - lastFlourishTime <= currentActionData.FlourishComboTimeFromEnd)
         {
+            ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.FlourishChain, ActionType.Flourish);
         }
         else
         {
-            if (currentActionData.AnimatorOverrideController)
-                ViewmodelAnim.Play("Recovery", 0, 0f);
+            ResetAnimVariables();
+            ViewmodelAnim.SetBool("SkipActive", true);
+            ViewmodelAnim.SetBool("StartRecovery", true);
             attackRecoveryTimeLeft = currentActionData.AttackRecoveryTime;
             blockRecoveryTimeLeft = currentActionData.BlockRecoveryTime;
             jumpRecoveryTimeLeft = currentActionData.JumpRecoveryTime;
@@ -404,18 +432,36 @@ public class Player : Entity
     }
     public void OnAttackTriggerEnter(Collider collider)
     {
+        Debug.Log("enter");
         currentAttackColliders.Add(collider);
     }
     public void OnAttackTriggerExit(Collider collider)
     {
+        Debug.Log("exit");
         currentAttackColliders.Remove(collider);
     }
     public void DoMeleeHit()
     {
         foreach (Collider collider in currentAttackColliders)
         {
-            
+            Debug.Log("Hitting");
+            Entity entityComponent = collider.gameObject.GetComponent<Entity>();
+            if (entityComponent != null)
+            {
+                DamageInstance damageInstance = new DamageInstance();
+                damageInstance.Amount = currentActionData.Damage;
+                damageInstance.Stamina = currentActionData.StaminaDamage;
+                damageInstance.Pushback = currentActionData.Pushback;
+
+                entityComponent.ApplyDamage(damageInstance);
+            }
         }
+    }
+    public override void ApplyDamage(DamageInstance damageInstance)
+    {
+        base.ApplyDamage(damageInstance);
+
+        rb.AddForce(damageInstance.Direction * 16f);
     }
 }
 

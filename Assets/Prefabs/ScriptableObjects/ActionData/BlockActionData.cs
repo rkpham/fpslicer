@@ -7,11 +7,11 @@ public class BlockActionData : ActionData
 
     public override void OnActionChargeStarted(Player player)
     {
-        player.EntityData.Blocking = true;
+        player.Blocking = true;
     }
     public override void OnActionActiveStarted(Player player)
     {
-        player.EntityData.Blocking = false;
+        player.Blocking = false;
     }
     public override void OnActionFinished(Player player) {}
 }
