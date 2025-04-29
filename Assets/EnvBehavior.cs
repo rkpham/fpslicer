@@ -21,7 +21,7 @@ public class EnvBehavior : MonoBehaviour
     void Start()
     {
         m_Animator = GetComponent<Animator>();
-        stage = 0;
+        stage = -1;
     }
 
     private void runAnim(int whichAnim)
