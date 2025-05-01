@@ -11,9 +11,9 @@ public class Entity : MonoBehaviour
     public float MaxHealth = 100f;
     public float Health = 100f;
     public float Stamina = 1.0f;
-    public float BaseSpeed = 16.0f;
     public float MaxSpeed = 3f;
-    public float MoveForce = 8f;
+    public float AccelerationMult = 16f;
+    public float MaxAcceleration = 3f;
     public float MoveInfluence = 1.0f;
     public bool Blocking = false;
 
@@ -26,7 +26,7 @@ public class Entity : MonoBehaviour
     }
     virtual public void ApplyDamage(DamageInstance damageInstance)
     {
-        MoveInfluence = 0.0f;
+        MoveInfluence = 0.001f;
         if (Blocking && damageInstance.Blockable)
         {
             rb.AddForce(damageInstance.Direction * damageInstance.Pushback * 0.5f);
@@ -43,15 +43,21 @@ public class Entity : MonoBehaviour
             Die();
         }
     }
-    protected void LimitMovement()
+    virtual protected void HandleMovement(Vector2 direction)
     {
-        Vector3 horizVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        MoveInfluence = Mathf.MoveTowards(MoveInfluence, 1f, Time.fixedDeltaTime);
 
-        if (horizVelocity.magnitude > MaxSpeed)
-        {
-            Vector3 limitedHorizVelocity = horizVelocity.normalized * MaxSpeed;
-            rb.linearVelocity = new Vector3(limitedHorizVelocity.x, rb.linearVelocity.y, limitedHorizVelocity.z);
-        }
+        Vector3 vel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        Vector3 accelDir = (transform.forward * direction.y + transform.right * direction.x);
+        float veer = Vector3.Dot(vel, accelDir.normalized);
+        float addSpeed = MaxSpeed - veer;
+        if (addSpeed < 0f)
+            addSpeed = 0f;
+
+        float accelSpeed = AccelerationMult * Time.fixedDeltaTime * MaxSpeed;
+        accelSpeed = Mathf.Clamp(accelSpeed, 0f, addSpeed);
+
+        rb.linearVelocity += accelDir * accelSpeed;
     }
     virtual public void Die()
     {

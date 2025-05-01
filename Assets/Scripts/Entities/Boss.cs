@@ -6,11 +6,11 @@ using TMPro;
 public class Boss : Entity
 {
     public Player Player;
-    public Transform Orientation;
-    public MeshRenderer ModelRenderer;
-    public MeshRenderer WeaponRenderer;
+    public Renderer ModelRenderer;
     public CurrentAction CurrentAction = CurrentAction.Wait;
     public TextMeshProUGUI text;
+
+    [SerializeField] Animator anim;
 
     Vector2 strafeDirection = Vector2.zero;
     float tickTimer = 1.0f;
@@ -23,7 +23,7 @@ public class Boss : Entity
         Vector2 targetPos = new Vector2(playerTransform.position.x, playerTransform.position.z);
         Vector2 targetTo = targetPos - horizPos;
         float angle = Mathf.Atan2(targetTo.x, targetTo.y) * Mathf.Rad2Deg;
-        Orientation.rotation = Quaternion.Euler(0, angle, 0);
+        transform.rotation = Quaternion.Euler(0, angle, 0);
 
         ModelRenderer.material.color = ModelRenderer.material.color + ((Color.white - ModelRenderer.material.color) * Time.deltaTime * 10f);
 
@@ -42,17 +42,24 @@ public class Boss : Entity
             ProcessActions();
             StartStrafe();
         }
-        ProcessMovement();
-        LimitMovement();
+        HandleMovement(strafeDirection);
     }
     public override void ApplyDamage(DamageInstance damageInstance)
     {
         if (CurrentAction == CurrentAction.Wait && Stamina >= 0.6f)
         {
-            StartCoroutine(DoBlock());
+            DoParry();
         }
         base.ApplyDamage(damageInstance);
         ModelRenderer.material.color = Color.red;
+    }
+    protected override void HandleMovement(Vector2 direction)
+    {
+        base.HandleMovement(direction);
+        Vector3 horizVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        float rightness = Vector3.Dot(horizVel.normalized, transform.right);
+        anim.SetFloat("WalkDirection", rightness);
+        anim.SetFloat("Speed", horizVel.magnitude);
     }
     void ProcessActions()
     {
@@ -67,17 +74,19 @@ public class Boss : Entity
         {
             if (CurrentAction == CurrentAction.Wait)
             {
-                if (Stamina >= 0.9f)
+                /*if (Stamina >= 0.9f)
                 {
-                    StartCoroutine(DoChargeAttack());
+                    DoChargeAttack();
                 }
-                else if (Stamina >= 0.3f)
+                else
+                */
+                if (Stamina >= 0.3f)
                 {
-                    StartCoroutine(DoAttack());
+                    DoAttack();
                 }
                 else if (Stamina >= 0.1f)
                 {
-                    StartCoroutine(DoBlock());
+                    DoBlock();
                 }
             }
         }
@@ -85,7 +94,7 @@ public class Boss : Entity
     }
     void StartStrafe()
     {
-        int strafeChoose = Random.Range(0, 3);
+        int strafeChoose = Random.Range(0, 4);
 
         switch (strafeChoose)
         {
@@ -106,56 +115,47 @@ public class Boss : Entity
                 break;
         }
     }
-    void ProcessMovement()
+    void DoChargeAttackHit()
     {
-        MoveInfluence = Mathf.MoveTowards(MoveInfluence, 1f, Time.fixedDeltaTime);
-        Vector3 moveDirection;
-        moveDirection = Orientation.forward * strafeDirection.y + Orientation.right * strafeDirection.x;
-
-        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce * MoveInfluence, ForceMode.Force);
-    }
-    IEnumerator DoChargeAttack()
-    {
-        CurrentAction = CurrentAction.ChargeAttack;
-        Stamina -= 0.4f;
-        WeaponRenderer.enabled = true;
-        yield return new WaitForSeconds(1);
         DamageInstance damageInstance = new DamageInstance();
         damageInstance.Stamina = 0.3f;
         damageInstance.Pushback = 240f;
-        damageInstance.Direction = Orientation.forward;
+        damageInstance.Direction = transform.forward;
         damageInstance.Amount = 30f;
         DoMeleeHit(damageInstance);
-        yield return new WaitForSeconds(1.99f);
-        WeaponRenderer.enabled = false;
-        CurrentAction = CurrentAction.Wait;
-
     }
-    IEnumerator DoAttack()
+    void DoChargeAttack()
     {
-        CurrentAction = CurrentAction.Attack;
-        Stamina -= 0.3f;
-        WeaponRenderer.enabled = true;
-        yield return new WaitForSeconds(0.5f);
+        anim.SetTrigger("ChargeStab");
+        CurrentAction = CurrentAction.ChargeAttack;
+        Stamina -= 0.4f;
+    }
+    void DoAttackHit()
+    {
         DamageInstance damageInstance = new DamageInstance();
         damageInstance.Stamina = 0.1f;
         damageInstance.Pushback = 120f;
-        damageInstance.Direction = Orientation.forward;
+        damageInstance.Direction = transform.forward;
         damageInstance.Amount = 10f;
         DoMeleeHit(damageInstance);
-        yield return new WaitForSeconds(0.49f);
-        WeaponRenderer.enabled = false;
-        CurrentAction = CurrentAction.Wait;
     }
-    IEnumerator DoBlock()
+    void DoAttack()
+    {
+        anim.SetTrigger("Stab");
+        CurrentAction = CurrentAction.Attack;
+        Stamina -= 0.3f;
+    }
+    void DoParry()
     {
         Stamina -= 0.2f;
         Blocking = true;
-        yield return new WaitForSeconds(0.5f);
-        Blocking = false;
-        CurrentAction = CurrentAction.Wait;
     }
-    
+    void DoBlock()
+    {
+        Stamina -= 0.2f;
+        Blocking = true;
+        Blocking = false;
+    }
     void DoMeleeHit(DamageInstance damageInstance)
     {
         foreach (Collider collider in currentAttackColliders)
@@ -166,6 +166,11 @@ public class Boss : Entity
                 entityComponent.ApplyDamage(damageInstance);
             }
         }
+    }
+    void OnAnimEnded()
+    {
+        CurrentAction = CurrentAction.Wait;
+        Blocking = false;
     }
 }
 

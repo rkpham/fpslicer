@@ -14,7 +14,6 @@ public class Player : Entity
     public ActionData BaseJumpData;
     public ActionData BaseFlourishData;
 
-    [SerializeField] Transform orientation;
     [SerializeField] PlayerCamera playerCamera;
     [SerializeField] Transform groundedRayStart;
     [SerializeField] Transform groundedRayEnd;
@@ -94,8 +93,7 @@ public class Player : Entity
     void FixedUpdate()
     {
         GetGrounded();
-        HandleMovement();
-        LimitMovement();
+        HandleMovement(moveInputValue);
         HandleActions();
     }
     void PerformedMoveInput(InputAction.CallbackContext ctx)
@@ -175,13 +173,6 @@ public class Player : Entity
         RaycastHit hit;
         Physics.Raycast(groundedRayStart.position, groundedRayEnd.TransformDirection(groundedRayEnd.position), out hit, 0.3f);
         isGrounded = hit.collider != null;
-    }
-    void HandleMovement()
-    {
-        MoveInfluence = Mathf.MoveTowards(MoveInfluence, 1f, Time.fixedDeltaTime);
-        Vector3 moveDirection = orientation.forward * moveInputValue.y + orientation.right * moveInputValue.x;
-
-        rb.AddForce(moveDirection.normalized * BaseSpeed * MoveForce * MoveInfluence, ForceMode.Force);
     }
     void HandleActions()
     {
@@ -421,7 +412,7 @@ public class Player : Entity
                 damageInstance.Amount = currentActionData.Damage;
                 damageInstance.Stamina = currentActionData.StaminaDamage;
                 damageInstance.Pushback = currentActionData.Pushback;
-                damageInstance.Direction = orientation.forward;
+                damageInstance.Direction = transform.forward;
                 damageInstance.Blockable = !currentActionData.Unblockable;
 
                 entityComponent.ApplyDamage(damageInstance);
