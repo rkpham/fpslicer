@@ -11,15 +11,19 @@ public class Entity : MonoBehaviour
     public float MaxHealth = 100f;
     public float Health = 100f;
     public float Stamina = 1.0f;
+    public float Friction = 3f;
     public float MaxSpeed = 3f;
     public float AccelerationMult = 16f;
+    public float AirAccelerationMult = 4f;
     public float MaxAcceleration = 3f;
     public float MoveInfluence = 1.0f;
     public bool Blocking = false;
+    public bool IsGrounded = false;
 
     protected List<Collider> currentAttackColliders = new List<Collider>();
-
     protected Rigidbody rb;
+
+    [SerializeField] private Collider entCollider;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -43,18 +47,56 @@ public class Entity : MonoBehaviour
             Die();
         }
     }
+    protected void GetGrounded()
+    {
+        IsGrounded = Physics.Raycast(transform.position, -Vector3.up, entCollider.bounds.extents.y + 0.1f);
+    }
+    void ApplyFriction(float speed, ref Vector3 velocity)
+    {
+        var drop = 0.0f;
+        if (speed < 0.00191)
+        {
+            return;
+        }
+        if (IsGrounded)
+        {
+            double stopSpeed = (5.0 / 16.0) * MaxSpeed;
+            double control = (speed < stopSpeed) ? stopSpeed : speed;
+            drop = (float)(control * Friction * Time.fixedDeltaTime);
+        }
+
+        float newSpeed = speed - drop;
+        if (newSpeed < 0)
+            newSpeed = 0;
+        newSpeed /= speed;
+        velocity *= newSpeed;
+    }
     virtual protected void HandleMovement(Vector2 direction)
     {
         MoveInfluence = Mathf.MoveTowards(MoveInfluence, 1f, Time.fixedDeltaTime);
+        MoveInfluence = Mathf.Clamp01(MoveInfluence);
 
         Vector3 vel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        Vector3 accelDir = (transform.forward * direction.y + transform.right * direction.x);
+
+        ApplyFriction(vel.magnitude, ref vel);
+
+        rb.linearVelocity = new Vector3(vel.x, rb.linearVelocity.y, vel.z);
+
+        Vector3 accelDir = (transform.forward * direction.y + transform.right * direction.x).normalized;
         float veer = Vector3.Dot(vel, accelDir.normalized);
         float addSpeed = MaxSpeed - veer;
         if (addSpeed < 0f)
             addSpeed = 0f;
 
-        float accelSpeed = AccelerationMult * Time.fixedDeltaTime * MaxSpeed;
+        float accelSpeed;
+        if (IsGrounded)
+        {
+            accelSpeed = AccelerationMult * Time.fixedDeltaTime * MaxSpeed;
+        }
+        else
+        {
+            accelSpeed = AirAccelerationMult * Time.fixedDeltaTime * MaxSpeed;
+        }
         accelSpeed = Mathf.Clamp(accelSpeed, 0f, addSpeed);
 
         rb.linearVelocity += accelDir * accelSpeed;

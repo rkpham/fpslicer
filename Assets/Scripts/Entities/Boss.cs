@@ -7,11 +7,9 @@ public class Boss : Entity
 {
     public Player Player;
     public Renderer ModelRenderer;
-    public CurrentAction CurrentAction = CurrentAction.Wait;
-    public TextMeshProUGUI text;
 
     [SerializeField] Animator anim;
-
+    CurrentAction CurrentAction = CurrentAction.Wait;
     Vector2 strafeDirection = Vector2.zero;
     float tickTimer = 1.0f;
     float aggressiveness = 0.0f;
@@ -26,8 +24,6 @@ public class Boss : Entity
         transform.rotation = Quaternion.Euler(0, angle, 0);
 
         ModelRenderer.material.color = ModelRenderer.material.color + ((Color.white - ModelRenderer.material.color) * Time.deltaTime * 10f);
-
-        text.text = string.Format("Timer:{0}\nAgressiveness: {1}\nStamina: {2}", tickTimer, aggressiveness, Stamina);
 
         if (aggressiveness < 10f)
         {
@@ -74,12 +70,9 @@ public class Boss : Entity
         {
             if (CurrentAction == CurrentAction.Wait)
             {
-                /*if (Stamina >= 0.9f)
                 {
                     DoChargeAttack();
                 }
-                else
-                */
                 if (Stamina >= 0.3f)
                 {
                     DoAttack();
@@ -119,7 +112,7 @@ public class Boss : Entity
     {
         DamageInstance damageInstance = new DamageInstance();
         damageInstance.Stamina = 0.3f;
-        damageInstance.Pushback = 240f;
+        damageInstance.Pushback = 400f;
         damageInstance.Direction = transform.forward;
         damageInstance.Amount = 30f;
         DoMeleeHit(damageInstance);
@@ -134,7 +127,7 @@ public class Boss : Entity
     {
         DamageInstance damageInstance = new DamageInstance();
         damageInstance.Stamina = 0.1f;
-        damageInstance.Pushback = 120f;
+        damageInstance.Pushback = 240f;
         damageInstance.Direction = transform.forward;
         damageInstance.Amount = 10f;
         DoMeleeHit(damageInstance);

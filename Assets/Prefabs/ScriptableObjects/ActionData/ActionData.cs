@@ -35,6 +35,10 @@ public abstract class ActionData : ScriptableObject
     public float StaminaDamage = 0.5f;
     public float Pushback = 0.5f;
     public float SpeedMult = 0.5f;
+    [Header("Movement Properties")]
+    public Vector3 moveForce = Vector3.zero;
+    public bool inputModulate = true;
+    public ActionStage forceApplyStage = ActionStage.Active;
     public abstract void OnActionWindupStarted(Player player);
     public abstract void OnActionChargeStarted(Player player);
     public abstract void OnActionActiveStarted(Player player);

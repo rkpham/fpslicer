@@ -1,0 +1,16 @@
+.black-background {
+    background-color: rgba(0, 0, 0, 0.49);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.title {
+}
+
+.label {
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+    font-size: 24px;
+}

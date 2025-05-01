@@ -4,6 +4,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Player : Entity
 {
@@ -17,8 +19,7 @@ public class Player : Entity
     [SerializeField] PlayerCamera playerCamera;
     [SerializeField] Transform groundedRayStart;
     [SerializeField] Transform groundedRayEnd;
-    public bool IsGrounded => isGrounded;
-    bool isGrounded;
+    [SerializeField] PostProcessManager postProcessManager;
     public bool CurrentlyBlocking = false;
 
     InputSystemActions inputSystemActions;
@@ -142,7 +143,7 @@ public class Player : Entity
             return;
 
         jumping = true;
-        lastBlockTime = Time.time;
+        lastJumpTime = Time.time;
         if (currentActionData == null)
         {
             StartActionWindup(BaseJumpData, ActionType.Jump);
@@ -167,12 +168,6 @@ public class Player : Entity
     void CanceledFlourishInput(InputAction.CallbackContext ctx)
     {
         flourishing = false;
-    }
-    void GetGrounded()
-    {
-        RaycastHit hit;
-        Physics.Raycast(groundedRayStart.position, groundedRayEnd.TransformDirection(groundedRayEnd.position), out hit, 0.3f);
-        isGrounded = hit.collider != null;
     }
     void HandleActions()
     {
@@ -264,7 +259,7 @@ public class Player : Entity
                     {
                         if (currentActionData.RepeatCharge)
                         {
-                            ViewmodelAnim.SetBool("RestartCharge", true);
+                            ViewmodelAnim.SetTrigger("RestartCharge");
                             StartActionCharge();
                         }
                         else
@@ -307,9 +302,15 @@ public class Player : Entity
         currentActionData = actionData;
         currentActionType = actionType;
         ViewmodelAnim.runtimeAnimatorController = actionData.AnimatorOverrideController;
-        ResetAnimVariables();
+        if (ViewmodelAnim.runtimeAnimatorController != null)
+            ResetAnimVariables();
         currentActionData.OnActionWindupStarted(this);
         ViewmodelAnim.SetBool("CancelRecovery", true);
+
+        if (currentActionData.forceApplyStage == ActionStage.Windup)
+        {
+            ApplyLocalForce(currentActionData.moveForce, currentActionData.inputModulate);
+        }
 
         if (currentActionData.WindupLength == 0)
         {
@@ -335,6 +336,12 @@ public class Player : Entity
     {
         chargeTimeElapsed = 0f;
         currentActionData.OnActionChargeStarted(this);
+
+        if (currentActionData.forceApplyStage == ActionStage.Charge)
+        {
+            ApplyLocalForce(currentActionData.moveForce, currentActionData.inputModulate);
+        }
+
         if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
         {
             StartActionActive();
@@ -350,6 +357,11 @@ public class Player : Entity
     {
         activeTimeElapsed = 0f;
         currentActionData.OnActionActiveStarted(this);
+
+        if (currentActionData.forceApplyStage == ActionStage.Active)
+        {
+            ApplyLocalForce(currentActionData.moveForce, currentActionData.inputModulate);
+        }
         if (currentActionData.IsAttack)
         {
             DoMeleeHit();
@@ -369,6 +381,10 @@ public class Player : Entity
     {
         currentActionData.OnActionFinished(this);
         ViewmodelAnim.SetBool("CancelRecovery", false);
+        if (currentActionData.forceApplyStage == ActionStage.Recovery)
+        {
+            ApplyLocalForce(currentActionData.moveForce, currentActionData.inputModulate);
+        }
         if (currentActionData.AttackChain != null && Time.time - lastAttackTime <= currentActionData.AttackComboTimeFromEnd)
         {
             ViewmodelAnim.SetTrigger("StartChain");
@@ -422,6 +438,27 @@ public class Player : Entity
     public override void ApplyDamage(DamageInstance damageInstance)
     {
         base.ApplyDamage(damageInstance);
+        if (blocking)
+        {
+            StartActionActive();
+        }
+        else
+        {
+            postProcessManager.DamageEffect();
+        }
+    }
+    void ApplyLocalForce(Vector3 force, bool inputModulate)
+    {
+        Vector3 localForce;
+        if (inputModulate)
+        {
+            localForce = force.x * transform.right + force.y * transform.up + force.z * transform.forward;
+        }
+        else
+        {
+            localForce = moveInputValue.x * transform.right * force.x + force.y * transform.up + moveInputValue.y * transform.forward * force.z;
+        }
+        rb.linearVelocity += localForce;
     }
 }
 
@@ -433,7 +470,7 @@ enum ActionType
     Flourish
 }
 
-enum ActionStage
+public enum ActionStage
 {
     Windup,
     Charge,
