@@ -1321,7 +1321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1505371223
 Transform:
   m_ObjectHideFlags: 0
@@ -7892,9 +7892,12 @@ MonoBehaviour:
   Friction: 3
   MaxSpeed: 2
   AccelerationMult: 8
+  AirAccelerationMult: 16
   MaxAcceleration: 2
   MoveInfluence: 1
   Blocking: 0
+  IsGrounded: 0
+  entCollider: {fileID: 1663687977}
   Player: {fileID: 1684335683}
   ModelRenderer: {fileID: 1066673268}
   anim: {fileID: 1663687976}
@@ -8014,13 +8017,16 @@ MonoBehaviour:
   Friction: 4
   MaxSpeed: 4
   AccelerationMult: 8
+  AirAccelerationMult: 16
   MaxAcceleration: 4
   MoveInfluence: 1
   Blocking: 0
+  IsGrounded: 0
+  entCollider: {fileID: 1684335679}
   ViewmodelAnim: {fileID: 342799362}
   BaseAttackData: {fileID: 11400000, guid: c5b1c27541e58794984f02d1cb6411be, type: 2}
   BaseBlockData: {fileID: 11400000, guid: bfb0f6b956d8f0744be7de75e331f34b, type: 2}
-  BaseJumpData: {fileID: 0}
+  BaseJumpData: {fileID: 11400000, guid: ce86572831e2a0d428ee278228466ebd, type: 2}
   BaseFlourishData: {fileID: 11400000, guid: 8ceb9927a2353b44bae9ccdff929803f, type: 2}
   playerCamera: {fileID: 1481677102}
   groundedRayStart: {fileID: 929555820}

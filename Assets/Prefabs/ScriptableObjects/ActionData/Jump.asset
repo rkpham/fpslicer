@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
   m_Name: Jump
   m_EditorClassIdentifier: 
-  AnimatorOverrideController: {fileID: 0}
+  AnimatorOverrideController: {fileID: 22100000, guid: 0daa28da1a143b04a827172469586805, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
   JumpChain: {fileID: 0}
   FlourishChain: {fileID: 0}
   InterruptImmediately: 0
-  WindupLength: -1
-  ChargeThreshold: -1
-  MaxChargeLength: -1
-  ActiveLength: -1
+  WindupLength: 0
+  ChargeThreshold: 0
+  MaxChargeLength: 0
+  ActiveLength: 1
   AttackComboTimeFromEnd: 0
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
@@ -40,6 +40,6 @@ MonoBehaviour:
   StaminaDamage: 0.5
   Pushback: 0.5
   SpeedMult: 0.5
-  moveForce: {x: 100, y: 100, z: 100}
+  moveForce: {x: 10, y: 10, z: 10}
   inputModulate: 1
   forceApplyStage: 2
