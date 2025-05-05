@@ -8,7 +8,7 @@ public class EnvBehTesteramatronic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && a.stage < 4)
         {
             a.NextStage();
         }

@@ -4,6 +4,7 @@ public class EnvBehavior : MonoBehaviour
 {
     // Variables
     private int _stage;
+    public EnvAnimAudio a;
     public int stage
     {
         get
@@ -14,6 +15,11 @@ public class EnvBehavior : MonoBehaviour
         {
             _stage = value;
             runAnim(value);
+            a?.PlayAudio(a.b[1], 1);
+            if(_stage > 4 && a!=null)
+            {
+                a = null;
+            }
         }
     }
     private Animator m_Animator;
@@ -21,6 +27,7 @@ public class EnvBehavior : MonoBehaviour
     void Start()
     {
         m_Animator = GetComponent<Animator>();
+        a = GetComponentInChildren<EnvAnimAudio>();
         stage = -1;
     }
 
