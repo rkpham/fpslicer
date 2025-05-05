@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: Floor19
+  - Name: NewEnv
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
