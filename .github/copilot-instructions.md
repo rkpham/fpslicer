@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: 3DUI_Camera
+  - Name: NewEnv
   - Tag: Untagged
-  - Layer: UI3D
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

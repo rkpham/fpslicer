@@ -58,7 +58,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stage3_anim
-  m_Speed: 0.24166666
+  m_Speed: 0.25
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -120957420771099214}
@@ -201,7 +201,7 @@ AnimatorController:
   - m_Name: Stage
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 0
+    m_DefaultInt: -1
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
@@ -225,7 +225,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: End(shouldBeInReverse)_anim
-  m_Speed: -1.65
+  m_Speed: -1.6583333
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9205502830091801132}
@@ -304,7 +304,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stage1_anim
-  m_Speed: 0.45833334
+  m_Speed: 0.44166666
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -192534440872148344}
@@ -331,7 +331,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Intro_anim
-  m_Speed: 0.041666668
+  m_Speed: 0.058333334
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -19364669538863598}

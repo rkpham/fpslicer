@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnvBehavior : MonoBehaviour
 {
     // Variables
-    private int _stage;
+    public int _stage;
     public EnvAnimAudio a;
     public int stage
     {
@@ -28,7 +28,6 @@ public class EnvBehavior : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         a = GetComponentInChildren<EnvAnimAudio>();
-        stage = -1;
     }
 
     private void runAnim(int whichAnim)

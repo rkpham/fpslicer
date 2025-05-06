@@ -1165,6 +1165,9 @@ GameObject:
   - component: {fileID: 655754309181272140}
   - component: {fileID: 4414530945905078510}
   - component: {fileID: 7189695740141928686}
+  - component: {fileID: 5510266592323956671}
+  - component: {fileID: 860082109177168276}
+  - component: {fileID: 2083345813240927695}
   m_Layer: 9
   m_Name: MoveIcon
   m_TagString: Untagged
@@ -1188,7 +1191,7 @@ Transform:
   - {fileID: 834024427734212763}
   - {fileID: 1960439969833684884}
   m_Father: {fileID: 8282216297242876860}
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &655754309181272140
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1262,6 +1265,65 @@ LookAtConstraint:
   m_Sources:
   - sourceTransform: {fileID: 1216795796476441893}
     weight: 1
+--- !u!114 &5510266592323956671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6659898759715756229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3823e7d20329d5948a558011d8786acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: f929a5524aa44c54cb711334eca1938e, type: 2}
+  - {fileID: 2100000, guid: 2986c5aa72e2b9c469a0972af3f236fe, type: 2}
+  gameObjects:
+  - {fileID: 467360065944848280}
+  - {fileID: 6882042369528416034}
+  - {fileID: 5552823717763352684}
+  - {fileID: 5861987145497914965}
+  - {fileID: 6295855328124131842}
+  animationClip: {fileID: 1827226128182048838, guid: 308918503d93bac48807179e5ef8b6a4, type: 3}
+  delay: 1
+  animator: {fileID: 2083345813240927695}
+--- !u!114 &860082109177168276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6659898759715756229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 241e0f07b2c26f148bb3884e32b48c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveIconBehaviour: {fileID: 5510266592323956671}
+--- !u!95 &2083345813240927695
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6659898759715756229}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 668461fcfe77a4f4a9e530c509f41629, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6882042369528416034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,8 +1473,9 @@ GameObject:
   - component: {fileID: 5147685822811286670}
   - component: {fileID: 4765564879689742595}
   - component: {fileID: 6369449735401030300}
+  - component: {fileID: 974607765384561768}
   m_Layer: 9
-  m_Name: pCube2
+  m_Name: WaterCompass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1486,6 +1549,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &974607765384561768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178763004862637555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7eb0d576fd73a4f8fe89e26874b03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TagToLookFor: ' Gurt'
+  offsetAngle: 0
 --- !u!1 &7975567611565461081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,8 +1853,9 @@ GameObject:
   - component: {fileID: 4286430000683558058}
   - component: {fileID: 561755012280278705}
   - component: {fileID: 2261006344126888947}
+  - component: {fileID: 5948925615002773030}
   m_Layer: 9
-  m_Name: pCube1
+  m_Name: EnemyCompass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1791,7 +1869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8598893017716194394}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0.02, z: 0}
   m_LocalScale: {x: 0.7106196, y: 1, z: 0.6025019}
   m_ConstrainProportionsScale: 0
@@ -1851,3 +1929,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5948925615002773030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598893017716194394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7eb0d576fd73a4f8fe89e26874b03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TagToLookFor: Test
+  offsetAngle: 0
