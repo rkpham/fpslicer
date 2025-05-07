@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: NewEnv
+  - Name: background
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI3D
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
