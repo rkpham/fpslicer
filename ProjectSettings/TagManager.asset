@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Test
   - ' Gurt'
+  - Boss
   layers:
   - Default
   - TransparentFX
