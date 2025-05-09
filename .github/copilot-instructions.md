@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: Point Light
-  - Tag: Untagged
+  - Name: BattleField
+  - Tag:  Gurt
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
