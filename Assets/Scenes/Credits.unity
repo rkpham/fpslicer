@@ -1829,7 +1829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDistance: 1.5
   moveSpeed: 5
-  sceneToLoad: Credits
+  sceneToLoad: Intro
   raycastLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -2050,7 +2050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDistance: 1.5
   moveSpeed: 5
-  sceneToLoad: BossBattle
+  sceneToLoad: Intro
   raycastLayers:
     serializedVersion: 2
     m_Bits: 512
