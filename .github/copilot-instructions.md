@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: TransformWrapper
+  - Name: pCube1
   - Tag: Untagged
-  - Layer: UI3D
+  - Layer: viewer
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
