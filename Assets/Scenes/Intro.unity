@@ -770,7 +770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubblePrefab: {fileID: 967832644324593781, guid: 1258ebfe5440d8445b2c3d4704a7b842, type: 3}
   scaleRange: {x: 0.1, y: 4}
-  upwardSpeedRange: {x: 20, y: 40}
+  upwardSpeedRange: {x: 10, y: 20}
   chaosForceXZ: {x: -5, y: 5}
   exhaleDuration: 5
   restDuration: 7
