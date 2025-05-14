@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: pCube1
+  - Name: Global Volume
   - Tag: Untagged
-  - Layer: viewer
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
