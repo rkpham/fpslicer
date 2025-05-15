@@ -13,6 +13,12 @@ public class Boss : Entity
     Vector2 strafeDirection = Vector2.zero;
     float tickTimer = 1.0f;
     float aggressiveness = 0.0f;
+    public ezsoundificatinator _ezsoundificatinator;
+
+    private void Start()
+    {
+        _ezsoundificatinator = GetComponentInChildren<ezsoundificatinator>();
+    }
 
     private void FixedUpdate()
     {
@@ -162,6 +168,7 @@ public class Boss : Entity
                 entityComponent.ApplyDamage(damageInstance);
             }
         }
+        _ezsoundificatinator.playDaBih();
     }
     void OnAnimEnded()
     {
