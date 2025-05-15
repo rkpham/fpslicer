@@ -22,7 +22,7 @@ public class IntroAnimationBehavior : MonoBehaviour
         }
         else
         {
-            manager.IncThaStage(GameObject.Find("Boss"));
+            manager.IncThaStage();
         }
     }
 }
