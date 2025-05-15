@@ -8,6 +8,6 @@ public class windBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        aSource.volume = (a.GetInteger("Stage") + 2) / 5f;
+        aSource.volume = (a.GetInteger("Stage") + 5) / 10f;
     }
 }

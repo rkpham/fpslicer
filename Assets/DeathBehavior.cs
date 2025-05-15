@@ -10,6 +10,7 @@ public class DeathBehavior : MonoBehaviour
     public AudioSource audioSourceB;
     public float fadeDuration = 2f;
     public string sceneToLoad;        // Set this in the Inspector
+    public Player player;
 
     void Start()
     {
@@ -22,6 +23,8 @@ public class DeathBehavior : MonoBehaviour
             image.color = color;
             image.gameObject.SetActive(false);
         }
+        player = GameObject.Find("Player").GetComponent<Player>();
+        player.onDied += DIE;
     }
 
     public void DIE()
@@ -71,9 +74,9 @@ public class DeathBehavior : MonoBehaviour
     private void Update()
     {
         // FOR TESTING
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            DIE();
-        }
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+           // DIE();
+        //}
     }
 }

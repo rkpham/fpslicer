@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,6 +9,14 @@ using static Player;
 
 public class Player : Entity
 {
+    public ezsoundificatinator _ezsoundificatinator;
+
+    private void Start()
+    {
+        _ezsoundificatinator = GetComponentInChildren<ezsoundificatinator>();
+    }
+
+
     public delegate void OnActionPerformed(ActionData actionData);
     public event OnActionPerformed onActionPerformed;
 
@@ -373,6 +380,11 @@ public class Player : Entity
     {
         activeTimeElapsed = 0f;
         currentActionData.OnActionActiveStarted(this);
+
+        if(currentActionType == ActionType.Attack)
+        {
+            _ezsoundificatinator.playDaBih();
+        }
 
         if (currentActionData.forceApplyStage == ActionStage.Active)
         {
