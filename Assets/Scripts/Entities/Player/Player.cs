@@ -463,13 +463,13 @@ public class Player : Entity
     }
     public override void ApplyDamage(DamageInstance damageInstance)
     {
-        base.ApplyDamage(damageInstance);
         if (blocking)
         {
             StartActionActive();
         }
         else
         {
+            base.ApplyDamage(damageInstance);
             postProcessManager.DamageEffect();
         }
     }

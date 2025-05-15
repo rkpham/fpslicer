@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionName: Jump
   ActionDescription: 
-  AnimatorOverrideController: {fileID: 0}
+  AnimatorOverrideController: {fileID: 22100000, guid: 853b483a9bd26c14987e7eda1e30a795, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
   JumpChain: {fileID: 0}

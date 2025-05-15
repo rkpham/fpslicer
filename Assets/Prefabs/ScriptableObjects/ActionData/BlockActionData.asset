@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BlockActionData
   m_EditorClassIdentifier: 
   ActionName: Block
+  ActionDescription: 
   AnimatorOverrideController: {fileID: 22100000, guid: 0daa28da1a143b04a827172469586805, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
@@ -28,7 +29,7 @@ MonoBehaviour:
   JumpComboTimeFromEnd: 0
   FlourishComboTimeFromEnd: 0
   AttackRecoveryTime: 0
-  BlockRecoveryTime: 0.5
+  BlockRecoveryTime: 0.2
   JumpRecoveryTime: 0
   FlourishRecoveryTime: 0
   LowChargeDefault: {fileID: 0}
