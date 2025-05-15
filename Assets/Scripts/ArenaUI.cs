@@ -16,6 +16,7 @@ public class ArenaUI : MonoBehaviour
     Dictionary<string, ActionData> performedActionList = new Dictionary<string, ActionData>();
     VisualElement pauseMenu;
     VisualElement moveList;
+    MoveIconBehaviour moveIconBehaviour;
 
     InputSystemActions inputSystemActions;
     InputAction pauseInput;
@@ -66,6 +67,8 @@ public class ArenaUI : MonoBehaviour
         pauseInput = inputSystemActions.Player.Pause;
         pauseInput.performed += PerformedPauseInput;
         pauseInput.canceled += CanceledPauseInput;
+
+        moveIconBehaviour = GameObject.Find("MoveIcon").GetComponent<MoveIconBehaviour>();
     }
 
     void Start()
@@ -125,6 +128,7 @@ public class ArenaUI : MonoBehaviour
         {
             performedActionList.Add(actionData.ActionName, actionData);
             document.rootVisualElement.Q<Button>(actionData.ActionName).text = actionData.ActionNameReadable;
+            moveIconBehaviour.PlayAnimation();
         }
     }
 

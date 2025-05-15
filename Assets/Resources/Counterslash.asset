@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
-  m_Name: FlourishSlash
+  m_Name: Counterslash
   m_EditorClassIdentifier: 
-  ActionName: FlourishSlash
-  ActionNameReadable: Stylish Slash
-  ActionDescription: 'Input: Flourish > Attack
+  ActionName: Counterslash
+  ActionNameReadable: Counter Slash
+  ActionDescription: 'Input: Block (success) > Attack
 
 
-    A powerful attack leading from
-    your flourish.'
-  AnimatorOverrideController: {fileID: 22100000, guid: 4dba0247e9e6a544f93ad4f1492bcded, type: 2}
+    A quick attack after
+    blocking an enemy''s attack.'
+  AnimatorOverrideController: {fileID: 22100000, guid: f44dfd73e0d3de94196595742b324c12, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
   JumpChain: {fileID: 0}
   FlourishChain: {fileID: 0}
   InterruptImmediately: 0
-  WindupLength: 0
-  ChargeThreshold: -1
-  MaxChargeLength: -1
+  WindupLength: -1
+  ChargeThreshold: 0
+  MaxChargeLength: 0
   ActiveLength: -1
-  AttackComboTimeFromEnd: 0.5
+  AttackComboTimeFromEnd: 0
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
-  FlourishComboTimeFromEnd: 0.5
-  AttackRecoveryTime: 1
-  BlockRecoveryTime: 1
+  FlourishComboTimeFromEnd: 0
+  AttackRecoveryTime: 0.5
+  BlockRecoveryTime: 0.5
   JumpRecoveryTime: 0
-  FlourishRecoveryTime: 1
+  FlourishRecoveryTime: 0
   LowChargeDefault: {fileID: 0}
   CanCharge: 0
   RepeatCharge: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   Unblockable: 0
   ManualActive: 0
   Damage: 5
-  StaminaDamage: 0.1
-  Pushback: 300
+  StaminaDamage: 0.2
+  Pushback: 320
   SpeedMult: 0.5
-  moveForce: {x: 0, y: 0, z: 0}
-  inputModulate: 1
+  moveForce: {x: 0, y: 0, z: 4}
+  inputModulate: 0
   forceApplyStage: 2

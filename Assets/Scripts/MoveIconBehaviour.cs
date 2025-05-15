@@ -5,7 +5,7 @@ public class MoveIconBehaviour : MonoBehaviour
 {
     [Header("References")]
     public Material[] materials = new Material[2];  // materials[0] = default, materials[1] = alternative
-    public GameObject[] gameObjects = new GameObject[4];
+    public GameObject[] gameObjects;
     public AnimationClip animationClip;
 
     [Header("Settings")]
@@ -17,6 +17,11 @@ public class MoveIconBehaviour : MonoBehaviour
     {
         // Optional: Try to get Animator if exists on this object
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        SetGameObjectMaterial(1, true);
     }
 
     public void SetGameObjectMaterial(int index, bool useSecondMaterial)
@@ -37,9 +42,7 @@ public class MoveIconBehaviour : MonoBehaviour
 
     private IEnumerator SetMaterialRoutine(int index, bool useSecondMaterial)
     {
-        PlayAnimation();
-
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(0.1f);
 
         Renderer renderer = gameObjects[index].GetComponent<Renderer>();
         if (renderer != null)
@@ -55,9 +58,7 @@ public class MoveIconBehaviour : MonoBehaviour
 
     private IEnumerator ResetAllMaterialsRoutine()
     {
-        PlayAnimation();
-
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(0.1f);
 
         foreach (GameObject obj in gameObjects)
         {

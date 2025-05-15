@@ -45,7 +45,7 @@ MonoBehaviour:
   ManualActive: 0
   Damage: 5
   StaminaDamage: 0.25
-  Pushback: 300
+  Pushback: 400
   SpeedMult: 0.5
   moveForce: {x: 0, y: 0, z: 6}
   inputModulate: 0

@@ -19,7 +19,7 @@ MonoBehaviour:
 
     Prevents you from getting hit.'
   AnimatorOverrideController: {fileID: 22100000, guid: 0daa28da1a143b04a827172469586805, type: 2}
-  AttackChain: {fileID: 0}
+  AttackChain: {fileID: 11400000, guid: b0756cd86e91437459acee4c229ec577, type: 2}
   BlockChain: {fileID: 0}
   JumpChain: {fileID: 0}
   FlourishChain: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
   ChargeThreshold: -1
   MaxChargeLength: -1
   ActiveLength: -1
-  AttackComboTimeFromEnd: 0
+  AttackComboTimeFromEnd: 0.5
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
   FlourishComboTimeFromEnd: 0

@@ -32,5 +32,4 @@ public class LevelManager : MonoBehaviour
         bozz.reSpawnYaCunt();
         envBehavior.NextStage();
     }
-
 }

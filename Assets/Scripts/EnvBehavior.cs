@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnvBehavior : MonoBehaviour
@@ -7,8 +8,9 @@ public class EnvBehavior : MonoBehaviour
     public EnvAnimAudio a;
     public GawkerBehaviour g;
     public WinBehavior win;
+    MoveIconBehaviour moveIconBehaviour;
 
-    
+
     public int stage
     {
         get
@@ -35,6 +37,7 @@ public class EnvBehavior : MonoBehaviour
         a = GetComponentInChildren<EnvAnimAudio>();
         g = GameObject.Find("Gawker").GetComponent<GawkerBehaviour>();
         win = GameObject.FindAnyObjectByType<WinBehavior>();
+        moveIconBehaviour = GameObject.Find("MoveIcon").GetComponent<MoveIconBehaviour>();
     }
 
     private void runAnim(int whichAnim)
@@ -54,6 +57,7 @@ public class EnvBehavior : MonoBehaviour
     public void SetStage(int whichStageVro)
     {
         stage = whichStageVro;
+        moveIconBehaviour.SetGameObjectMaterial(whichStageVro + 2, true);
     }
 
 }
