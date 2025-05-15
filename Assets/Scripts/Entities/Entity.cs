@@ -90,6 +90,8 @@ public class Entity : MonoBehaviour
         else
             addSpeed = (3f / 40f) * MaxSpeed - veer;
 
+        addSpeed *= MoveInfluence;
+
         if (addSpeed < 0f)
             addSpeed = 0f;
 
