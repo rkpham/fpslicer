@@ -17,8 +17,6 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         inputSystemActions = new InputSystemActions();
         inputSystemActions.Player.Look.Enable();
         inputSystemActions.Player.Look.performed += Look;
@@ -35,11 +33,6 @@ public class PlayerCamera : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-    }
-    void OnDisable()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
     void Look(InputAction.CallbackContext ctx)
     {

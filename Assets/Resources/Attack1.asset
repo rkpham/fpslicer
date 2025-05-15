@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
-  m_Name: Attack3
+  m_Name: Attack1
   m_EditorClassIdentifier: 
-  ActionName: Attack3
-  ActionNameReadable: Stab Finisher
-  ActionDescription: 'Input: Attack > Attack > Attack
+  ActionName: Attack1
+  ActionNameReadable: Stab
+  ActionDescription: 'Input: Attack
 
 
-    A finisher to your three
-    hit basic combo.'
-  AnimatorOverrideController: {fileID: 22100000, guid: ad6f9ff50c5a2f045b603e69a79d0932, type: 2}
-  AttackChain: {fileID: 0}
+    Your basic attack.'
+  AnimatorOverrideController: {fileID: 22100000, guid: 7f35dfcb0bcfe2944981f629118acb16, type: 2}
+  AttackChain: {fileID: 11400000, guid: 96672fde528d5c44ea190ce426f0d331, type: 2}
   BlockChain: {fileID: 0}
   JumpChain: {fileID: 0}
   FlourishChain: {fileID: 0}
@@ -41,11 +40,11 @@ MonoBehaviour:
   CanCharge: 0
   RepeatCharge: 0
   IsAttack: 1
-  Unblockable: 1
+  Unblockable: 0
   ManualActive: 0
   Damage: 5
-  StaminaDamage: 0.2
-  Pushback: 180
+  StaminaDamage: 0.1
+  Pushback: 240
   SpeedMult: 0.5
   moveForce: {x: 0, y: 0, z: 0}
   inputModulate: 1

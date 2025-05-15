@@ -84,11 +84,10 @@ public class ArenaUI : MonoBehaviour
             PlayerEntity.onActionPerformed += OnPlayerActionPerformed;
         }
 
-        string[] actionDataGUIDs = AssetDatabase.FindAssets("t:ActionData");
-        foreach (string actionGUID in actionDataGUIDs)
+        ActionData[] actionDatas = Resources.FindObjectsOfTypeAll<ActionData>();
+        foreach (ActionData actionData in actionDatas)
         {
-            ActionData loadedActionData = AssetDatabase.LoadAssetAtPath<ActionData>(AssetDatabase.GUIDToAssetPath(actionGUID));
-            AddMoveListInstance(loadedActionData);
+            AddMoveListInstance(actionData);
         }
 
         document.rootVisualElement.Q("ContinueButton").RegisterCallback<ClickEvent>(OnPauseContinueClicked);
@@ -107,6 +106,17 @@ public class ArenaUI : MonoBehaviour
     void OnPlayerDamaged(DamageInstance damageInstance)
     {
         HealthBarTransform.localScale = new Vector3(PlayerEntity.Health / PlayerEntity.MaxHealth, 1f, 1f);
+        if (HealthBarTransform.localScale.x < 0f)
+            HealthBarTransform.localScale = new Vector3(0f, 1f, 1f);
+    }
+
+    void AddMoveListInstance(ActionData actionData)
+    {
+        TemplateContainer newMoveElement = MoveListInstance.Instantiate();
+        document.rootVisualElement.Q("MoveListElements").Add(newMoveElement);
+        newMoveElement.Q<Button>("MoveButton").text = "???";
+        newMoveElement.Q<Button>("MoveButton").name = actionData.ActionName;
+        newMoveElement.RegisterCallback<ClickEvent, ActionData>(OnMoveClicked, actionData);
     }
 
     void OnPlayerActionPerformed(ActionData actionData)
@@ -114,15 +124,8 @@ public class ArenaUI : MonoBehaviour
         if (!performedActionList.ContainsKey(actionData.ActionName))
         {
             performedActionList.Add(actionData.ActionName, actionData);
+            document.rootVisualElement.Q<Button>(actionData.ActionName).text = actionData.ActionNameReadable;
         }
-    }
-
-    void AddMoveListInstance(ActionData actionData)
-    {
-        TemplateContainer newMoveElement = MoveListInstance.Instantiate();
-        document.rootVisualElement.Q("MoveListElements").Add(newMoveElement);
-        newMoveElement.Q<Button>("MoveButton").text = actionData.ActionNameReadable;
-        newMoveElement.RegisterCallback<ClickEvent, ActionData>(OnMoveClicked, actionData);
     }
 
     void OnMoveClicked(ClickEvent clickEvent, ActionData actionData)

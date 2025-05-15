@@ -8974,7 +8974,7 @@ MonoBehaviour:
   MaxHealth: 100
   Health: 100
   Stamina: 1
-  Friction: 5
+  Friction: 2
   MaxSpeed: 2
   AccelerationMult: 8
   AirAccelerationMult: 16
@@ -9699,6 +9699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bozz: {fileID: 0}
+  bossObject: {fileID: 0}
   deathBehavior: {fileID: 0}
   envBehavior: {fileID: 0}
 --- !u!1 &1980448181 stripped

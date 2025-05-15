@@ -10,43 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
-  m_Name: ChargedAttack
+  m_Name: Attack3
   m_EditorClassIdentifier: 
-  ActionName: ChargedAttack
-  ActionNameReadable: Charged Attack
-  ActionDescription: 'Input: Attack (hold)
+  ActionName: Attack3
+  ActionNameReadable: Stab Finisher
+  ActionDescription: 'Input: Attack > Attack > Attack
 
 
-    A slow but powerful attack that
-    moves you forward slightly.'
-  AnimatorOverrideController: {fileID: 22100000, guid: f4dc104938b32e4499b15840f3409db4, type: 2}
-  AttackChain: {fileID: 11400000, guid: 96672fde528d5c44ea190ce426f0d331, type: 2}
+    A finisher to your three
+    hit basic combo.'
+  AnimatorOverrideController: {fileID: 22100000, guid: ad6f9ff50c5a2f045b603e69a79d0932, type: 2}
+  AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
   JumpChain: {fileID: 0}
   FlourishChain: {fileID: 0}
   InterruptImmediately: 0
   WindupLength: 0
-  ChargeThreshold: 1
-  MaxChargeLength: 1.5
+  ChargeThreshold: -1
+  MaxChargeLength: -1
   ActiveLength: -1
   AttackComboTimeFromEnd: 0.5
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
   FlourishComboTimeFromEnd: 0
-  AttackRecoveryTime: 1
+  AttackRecoveryTime: 0.5
   BlockRecoveryTime: 0
   JumpRecoveryTime: 0
-  FlourishRecoveryTime: 0
-  LowChargeDefault: {fileID: 11400000, guid: 4de648702d9bbf64b94db85e87f81483, type: 2}
-  CanCharge: 1
+  FlourishRecoveryTime: 0.5
+  LowChargeDefault: {fileID: 0}
+  CanCharge: 0
   RepeatCharge: 0
   IsAttack: 1
   Unblockable: 1
   ManualActive: 0
   Damage: 5
-  StaminaDamage: 0.25
-  Pushback: 180
+  StaminaDamage: 0.2
+  Pushback: 300
   SpeedMult: 0.5
-  moveForce: {x: 0, y: 0, z: 6}
-  inputModulate: 0
+  moveForce: {x: 0, y: 0, z: 0}
+  inputModulate: 1
   forceApplyStage: 2
