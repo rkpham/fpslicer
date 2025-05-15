@@ -378,6 +378,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2874620415991674557, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f929a5524aa44c54cb711334eca1938e, type: 2}
     - target: {fileID: 2881167633495798313, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.17956838
@@ -426,6 +430,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5777601317442626670, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f929a5524aa44c54cb711334eca1938e, type: 2}
     - target: {fileID: 5969204957879910599, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
       propertyPath: maxRotationLag
       value: 2
@@ -446,6 +454,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.10271208
       objectReference: {fileID: 0}
+    - target: {fileID: 6921892392429064011, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f929a5524aa44c54cb711334eca1938e, type: 2}
+    - target: {fileID: 6935065786649970169, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f929a5524aa44c54cb711334eca1938e, type: 2}
     - target: {fileID: 7337562654372170213, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -486,6 +502,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8109418671994033448, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f929a5524aa44c54cb711334eca1938e, type: 2}
     - target: {fileID: 8282216297242876860, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.15744741
@@ -9679,6 +9699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bozz: {fileID: 0}
+  deathBehavior: {fileID: 0}
   envBehavior: {fileID: 0}
 --- !u!1 &1980448181 stripped
 GameObject:
