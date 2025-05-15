@@ -48,20 +48,21 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DstBlend: 10
     - _DstBlendAlpha: 10
-    - _Metallic: 0
+    - _Metallic: 0.547
     - _Smoothness: 1
     - _SrcBlend: 5
     - _Surface: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.5377358, b: 0.40993884, a: 0.29803923}
-    - _Color: {r: 0, g: 0.53773576, b: 0.4099388, a: 0.29803923}
+    - _BaseColor: {r: 0, g: 0.53773564, b: 0.4099385, a: 0.7176471}
+    - _Color: {r: 0, g: 0.53773564, b: 0.40993848, a: 0.7176471}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

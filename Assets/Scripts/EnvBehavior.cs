@@ -5,6 +5,7 @@ public class EnvBehavior : MonoBehaviour
     // Variables
     public int _stage;
     public EnvAnimAudio a;
+    public GawkerBehaviour g;
     public int stage
     {
         get
@@ -20,6 +21,7 @@ public class EnvBehavior : MonoBehaviour
             {
                 a = null;
             }
+            g.setIntensity(_stage);
         }
     }
     private Animator m_Animator;
@@ -28,6 +30,7 @@ public class EnvBehavior : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         a = GetComponentInChildren<EnvAnimAudio>();
+        g = GameObject.Find("Gawker").GetComponent<GawkerBehaviour>();
     }
 
     private void runAnim(int whichAnim)
