@@ -6,6 +6,9 @@ public class EnvBehavior : MonoBehaviour
     public int _stage;
     public EnvAnimAudio a;
     public GawkerBehaviour g;
+    public WinBehavior win;
+
+    
     public int stage
     {
         get
@@ -31,6 +34,7 @@ public class EnvBehavior : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         a = GetComponentInChildren<EnvAnimAudio>();
         g = GameObject.Find("Gawker").GetComponent<GawkerBehaviour>();
+        win = GameObject.FindAnyObjectByType<WinBehavior>();
     }
 
     private void runAnim(int whichAnim)
@@ -40,6 +44,10 @@ public class EnvBehavior : MonoBehaviour
 
     public void NextStage()
     {
+        if(stage == 3)
+        {
+            win.DIE();
+        }
         SetStage(stage+1);
     }
 

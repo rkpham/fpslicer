@@ -7,6 +7,8 @@ public class Boss : Entity
 {
     public Player Player;
     public Renderer ModelRenderer;
+    private Vector3 initLocation;
+    private Quaternion initRotation;
 
     [SerializeField] Animator anim;
     CurrentAction CurrentAction = CurrentAction.Wait;
@@ -18,6 +20,14 @@ public class Boss : Entity
     private void Start()
     {
         _ezsoundificatinator = GetComponentInChildren<ezsoundificatinator>();
+        initLocation = transform.position;
+        initRotation = transform.rotation;
+    }
+
+    public void reSpawnYaCunt()
+    {
+        transform.position = initLocation;
+        transform.rotation = initRotation;
     }
 
     private void FixedUpdate()
