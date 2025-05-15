@@ -4,10 +4,12 @@ public class LevelManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Boss bozz;
+    public GameObject bossObject;
     public DeathBehavior deathBehavior;
     public EnvBehavior envBehavior;
     void Start()
     {
+        bossObject = GameObject.Find("Boss");
         bozz = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
         envBehavior = GameObject.Find("NewEnv").GetComponent<EnvBehavior>();
         deathBehavior = GameObject.FindAnyObjectByType<DeathBehavior>();
@@ -18,27 +20,16 @@ public class LevelManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Boss")
         {
-            IncThaStage(other.gameObject);
+            IncThaStage();
         }
         else if (other.gameObject.tag == "Player")
         {
             deathBehavior.DIE();
         }
     }
-    //FOR TESTING
-    private void Update()
+    public void IncThaStage()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            IncThaStage(GameObject.Find("Boss"));
-        }
-    }
-    private void IncThaStage(GameObject other)
-    {
-        if (bozz != null && other.tag == "Boss")
-        {
-            bozz.reSpawnYaCunt();
-        }
+        bozz.reSpawnYaCunt();
         envBehavior.NextStage();
     }
 

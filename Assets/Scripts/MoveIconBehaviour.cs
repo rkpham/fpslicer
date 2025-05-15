@@ -76,7 +76,7 @@ public class MoveIconBehaviour : MonoBehaviour
         }
     }
 
-    private void PlayAnimation()
+    public void PlayAnimation()
     {
         animator.ResetTrigger("GO"); // Clear any previous accidental triggers
         animator.SetTrigger("GO");   // Fire fresh
