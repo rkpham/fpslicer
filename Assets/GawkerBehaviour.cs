@@ -17,6 +17,11 @@ public class GawkerBehaviour : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        songChange(0);
+    }
+
     public void setIntensity(int intensity)
     {
         Intensity = intensity;
@@ -24,11 +29,18 @@ public class GawkerBehaviour : MonoBehaviour
 
     public void songChange(int i)
     {
-        foreach (AudioSource source in a)
+        for(int b =  0; b < a.Length; b++)
         {
-            source.volume = 0;
+            a[b].volume = 0;
         }
-        a[i].volume = 1;
+        if (i < a.Length)
+        {
+            a[i].volume = 1;
+        }
+        else
+        {
+            a[0].volume = 1;
+        }
     }
 
 }
