@@ -155,6 +155,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: -6
+--- !u!1001 &51420018
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 628782875904004646, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_Name
+      value: IntroAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 628782875904004646, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -52.079132
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.612177
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.666285
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317478665059736789, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4aa2afd74657e084fa2e7974cdb9ef3b, type: 3}
 --- !u!1 &135971110 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2640345367892238973, guid: 6b787fc4c8289734db1c0b34ae78da4e, type: 3}
@@ -825,7 +886,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1525
+    m_Bits: 1509
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -1552,7 +1613,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: 7000
   m_Range: 10000
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1634,7 +1695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _intensity: 0
-  BaseGlow: 1
+  BaseGlow: 4
   a:
   - {fileID: 1121119899}
   - {fileID: 1121119898}
@@ -9894,3 +9955,4 @@ SceneRoots:
   - {fileID: 1121119894}
   - {fileID: 1459021887}
   - {fileID: 1859891630350734333}
+  - {fileID: 51420018}
