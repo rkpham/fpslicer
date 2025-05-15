@@ -102,7 +102,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Look"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""ed9c6a55-6717-4d11-9031-61a1354917ec"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -140,6 +140,15 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""name"": ""Flourish"",
                     ""type"": ""Button"",
                     ""id"": ""ef362ac8-b534-4f69-8d00-6836f766cac0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b8c99bd-3c3d-496f-b988-7de625f3373b"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -218,7 +227,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""id"": ""40963585-7543-4c2c-b746-cc1943d94d9c"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=4,y=4)"",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -320,6 +329,28 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03c70ded-7480-4192-acd6-ddfce726362f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c583cf44-e086-458d-84af-188ad69a1817"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -913,6 +944,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Flourish = m_Player.FindAction("Flourish", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1012,6 +1044,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Flourish;
+    private readonly InputAction m_Player_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1047,6 +1080,10 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Flourish".
         /// </summary>
         public InputAction @Flourish => m_Wrapper.m_Player_Flourish;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1091,6 +1128,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Flourish.started += instance.OnFlourish;
             @Flourish.performed += instance.OnFlourish;
             @Flourish.canceled += instance.OnFlourish;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -1120,6 +1160,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Flourish.started -= instance.OnFlourish;
             @Flourish.performed -= instance.OnFlourish;
             @Flourish.canceled -= instance.OnFlourish;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -1462,6 +1505,13 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFlourish(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

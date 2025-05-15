@@ -12,6 +12,8 @@ public class PlayerCamera : MonoBehaviour
     private float xRotation;
 
     InputSystemActions inputSystemActions;
+    Vector2 lookValue;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -20,11 +22,19 @@ public class PlayerCamera : MonoBehaviour
         inputSystemActions = new InputSystemActions();
         inputSystemActions.Player.Look.Enable();
         inputSystemActions.Player.Look.performed += Look;
+        inputSystemActions.Player.Look.canceled += StopLook;
     }
 
     // Update is called once per frame
     void Update()
     {
+        yRotation += lookValue.x * sensX * Time.deltaTime;
+
+        xRotation -= lookValue.y * sensY * Time.deltaTime;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
     void OnDisable()
     {
@@ -33,13 +43,10 @@ public class PlayerCamera : MonoBehaviour
     }
     void Look(InputAction.CallbackContext ctx)
     {
-        Vector2 lookValue = ctx.ReadValue<Vector2>();
-        yRotation += lookValue.x * sensX;
-
-        xRotation -= lookValue.y * sensY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+       lookValue = ctx.ReadValue<Vector2>();
+    }
+    void StopLook(InputAction.CallbackContext ctx)
+    {
+        lookValue = Vector2.zero;
     }
 }

@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Look",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "ed9c6a55-6717-4d11-9031-61a1354917ec",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -54,6 +54,15 @@
                     "name": "Flourish",
                     "type": "Button",
                     "id": "ef362ac8-b534-4f69-8d00-6836f766cac0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "0b8c99bd-3c3d-496f-b988-7de625f3373b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -132,7 +141,7 @@
                     "id": "40963585-7543-4c2c-b746-cc1943d94d9c",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=4,y=4)",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -234,6 +243,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03c70ded-7480-4192-acd6-ddfce726362f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c583cf44-e086-458d-84af-188ad69a1817",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

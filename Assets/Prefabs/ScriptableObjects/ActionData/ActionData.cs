@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public abstract class ActionData : ScriptableObject
 {
+    public string ActionName;
+    [TextAreaAttribute]
+    public string ActionDescription;
     public AnimatorOverrideController AnimatorOverrideController;
     [Header("Action Combinations")]
     public ActionData AttackChain;

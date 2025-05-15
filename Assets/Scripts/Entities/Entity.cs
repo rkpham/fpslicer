@@ -84,7 +84,12 @@ public class Entity : MonoBehaviour
 
         Vector3 accelDir = (transform.forward * direction.y + transform.right * direction.x).normalized;
         float veer = Vector3.Dot(vel, accelDir.normalized);
-        float addSpeed = MaxSpeed - veer;
+        float addSpeed;
+        if (IsGrounded)
+            addSpeed = MaxSpeed - veer;
+        else
+            addSpeed = (3f / 40f) * MaxSpeed - veer;
+
         if (addSpeed < 0f)
             addSpeed = 0f;
 

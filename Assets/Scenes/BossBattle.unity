@@ -1667,7 +1667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1505371223
 Transform:
   m_ObjectHideFlags: 0
@@ -1714,7 +1714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f3c5f7650d8574b8f85dd8c53b7e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerEntity: {fileID: 0}
+  PlayerEntity: {fileID: 1684335683}
+  MoveListInstance: {fileID: 9197481963319205126, guid: c5640d06ede3414418b5dd03cae26cc4, type: 3}
+  UI3D: {fileID: 1980448181}
 --- !u!1001 &1529909654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1775,6 +1777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 62946a69373e7924f96c2cff844698be, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0e14874d75b5d3e4bbd40c297d87ccf2, type: 2}
     - target: {fileID: 919132149155446097, guid: 62946a69373e7924f96c2cff844698be, type: 3}
       propertyPath: m_Name
       value: rapier
@@ -8084,7 +8090,7 @@ MonoBehaviour:
   MaxHealth: 100
   Health: 100
   Stamina: 1
-  Friction: 3
+  Friction: 5
   MaxSpeed: 2
   AccelerationMult: 8
   AirAccelerationMult: 16
@@ -8583,6 +8589,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6e9ca364552f34ea20c92cee64d4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1980448181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5139278802496701328, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
+  m_PrefabInstance: {fileID: 243487886}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2089112204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6077928983190137884, guid: 3dacfb95088a99e4dafa161a8f121277, type: 3}
@@ -8721,6 +8732,10 @@ PrefabInstance:
       propertyPath: entity
       value: 
       objectReference: {fileID: 1684335683}
+    - target: {fileID: 2394365723086708581, guid: 7481c0ab48482f3448eb8c69cb12d30a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bc13b030d2af89d458f98cd3b916deec, type: 2}
     - target: {fileID: 4722212383102343701, guid: 7481c0ab48482f3448eb8c69cb12d30a, type: 3}
       propertyPath: m_Name
       value: CameraAnchor
@@ -8770,6 +8785,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7517070988317382855, guid: 7481c0ab48482f3448eb8c69cb12d30a, type: 3}
+      propertyPath: sensX
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517070988317382855, guid: 7481c0ab48482f3448eb8c69cb12d30a, type: 3}
+      propertyPath: sensY
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517070988317382855, guid: 7481c0ab48482f3448eb8c69cb12d30a, type: 3}
       propertyPath: orientation
       value: 
       objectReference: {fileID: 1684335682}
@@ -8777,6 +8800,10 @@ PrefabInstance:
       propertyPath: cameraAnchorTransform
       value: 
       objectReference: {fileID: 1437839214}
+    - target: {fileID: 8699556680350042342, guid: 7481c0ab48482f3448eb8c69cb12d30a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0e14874d75b5d3e4bbd40c297d87ccf2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

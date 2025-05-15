@@ -1,7 +1,4 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/MoveListInstanceStyle.uss?fileID=7433441132597879392&amp;guid=967b4dc8e7b457c478569690491f6892&amp;type=3#MoveListInstanceStyle" />
-    <ui:VisualElement name="Background" class="black-background" style="flex-grow: 1; position: relative; flex-wrap: nowrap; flex-direction: column; visibility: visible; display: flex; opacity: 1; justify-content: center; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; margin-bottom: 4px; margin-top: 4px; padding-left: 4px; padding-bottom: 4px; padding-right: 4px; padding-top: 4px;">
-        <ui:Label text="Move Added!" name="MoveAddedText" class="default-text" style="-unity-font-style: bold; font-size: 20px;" />
-        <ui:Label text="Label" name="MoveName" class="default-text" />
-    </ui:VisualElement>
+    <Style src="project://database/Assets/UI%20Toolkit/ArenaUIStyle.uss?fileID=7433441132597879392&amp;guid=206199dbf12f0d8468b8b791d86f80d4&amp;type=3#ArenaUIStyle" />
+    <ui:Button text="Button" class="pause-button" />
 </ui:UXML>

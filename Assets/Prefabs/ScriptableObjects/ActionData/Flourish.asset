@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
   m_Name: Flourish
   m_EditorClassIdentifier: 
+  ActionName: Flourish
   AnimatorOverrideController: {fileID: 22100000, guid: 7dfd06358e6afe34d9d2f7ced6c02b24, type: 2}
   AttackChain: {fileID: 11400000, guid: 92100beabd9035541a8d6140e40b232b, type: 2}
   BlockChain: {fileID: 0}
@@ -40,3 +41,6 @@ MonoBehaviour:
   StaminaDamage: 0.1
   Pushback: 0.5
   SpeedMult: 0.5
+  moveForce: {x: 0, y: 0, z: 0}
+  inputModulate: 1
+  forceApplyStage: 2

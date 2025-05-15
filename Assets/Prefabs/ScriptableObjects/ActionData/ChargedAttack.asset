@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
   m_Name: ChargedAttack
   m_EditorClassIdentifier: 
+  ActionName: ChargedAttack
+  ActionDescription: 
   AnimatorOverrideController: {fileID: 22100000, guid: f4dc104938b32e4499b15840f3409db4, type: 2}
   AttackChain: {fileID: 11400000, guid: 96672fde528d5c44ea190ce426f0d331, type: 2}
   BlockChain: {fileID: 0}
@@ -38,5 +40,8 @@ MonoBehaviour:
   ManualActive: 0
   Damage: 5
   StaminaDamage: 0.25
-  Pushback: 480
+  Pushback: 180
   SpeedMult: 0.5
+  moveForce: {x: 0, y: 0, z: 6}
+  inputModulate: 0
+  forceApplyStage: 2

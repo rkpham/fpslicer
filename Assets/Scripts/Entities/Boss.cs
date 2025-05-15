@@ -38,6 +38,7 @@ public class Boss : Entity
             ProcessActions();
             StartStrafe();
         }
+        GetGrounded();
         HandleMovement(strafeDirection);
     }
     public override void ApplyDamage(DamageInstance damageInstance)
@@ -52,10 +53,12 @@ public class Boss : Entity
     protected override void HandleMovement(Vector2 direction)
     {
         base.HandleMovement(direction);
-        Vector3 horizVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        float rightness = Vector3.Dot(horizVel.normalized, transform.right);
-        anim.SetFloat("WalkDirection", rightness);
-        anim.SetFloat("Speed", horizVel.magnitude);
+        Vector3 horizVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z).normalized;
+        float speedX = Vector3.Dot(transform.right, horizVel);
+        float speedY = Vector3.Dot(transform.forward, horizVel);
+        anim.SetFloat("SpeedX", speedX);
+        anim.SetFloat("SpeedY", speedY);
+        anim.SetFloat("Speed", horizVel.magnitude * 3f);
     }
     void ProcessActions()
     {

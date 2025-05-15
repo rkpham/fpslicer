@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
   m_Name: FlourishSlash
   m_EditorClassIdentifier: 
+  ActionName: FlourishSlash
+  ActionDescription: 
   AnimatorOverrideController: {fileID: 22100000, guid: 4dba0247e9e6a544f93ad4f1492bcded, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
@@ -26,10 +28,10 @@ MonoBehaviour:
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
   FlourishComboTimeFromEnd: 0.5
-  AttackRecoveryTime: 0.5
-  BlockRecoveryTime: 0
+  AttackRecoveryTime: 1
+  BlockRecoveryTime: 1
   JumpRecoveryTime: 0
-  FlourishRecoveryTime: 0.5
+  FlourishRecoveryTime: 1
   LowChargeDefault: {fileID: 0}
   CanCharge: 0
   RepeatCharge: 0
@@ -40,3 +42,6 @@ MonoBehaviour:
   StaminaDamage: 0.1
   Pushback: 180
   SpeedMult: 0.5
+  moveForce: {x: 0, y: 0, z: 0}
+  inputModulate: 1
+  forceApplyStage: 2

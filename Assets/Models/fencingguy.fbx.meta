@@ -22,7 +22,10 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'root|chargestab' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'hand.l' has scale animation that will be
+      discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -123,7 +126,7 @@ ModelImporter:
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
-      cycleOffset: 0
+      cycleOffset: 0.41675
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
@@ -150,9 +153,9 @@ ModelImporter:
       firstFrame: 0
       lastFrame: 40
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 0.41675
       level: 0
-      cycleOffset: 0.41675
+      cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
@@ -179,7 +182,7 @@ ModelImporter:
       firstFrame: 0
       lastFrame: 40
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 0.41675
       level: 0
       cycleOffset: 0
       loop: 0
@@ -269,6 +272,35 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: root|walkbackward
+      takeName: root|walkbackward
+      internalID: -718319515698618230
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

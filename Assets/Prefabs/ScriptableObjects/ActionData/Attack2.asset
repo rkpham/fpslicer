@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde665b358927f346bfee93b0c9a4e55, type: 3}
   m_Name: Attack2
   m_EditorClassIdentifier: 
+  ActionName: Attack2
+  ActionDescription: 
   AnimatorOverrideController: {fileID: 22100000, guid: 8cea53a59bba4f4489b6ccab2697a026, type: 2}
   AttackChain: {fileID: 11400000, guid: 3956ed902bdc9f44fa65d2c5d50e2f8e, type: 2}
   BlockChain: {fileID: 0}
@@ -38,5 +40,8 @@ MonoBehaviour:
   ManualActive: 0
   Damage: 5
   StaminaDamage: 0.1
-  Pushback: 240
+  Pushback: 120
   SpeedMult: 0.5
+  moveForce: {x: 0, y: 0, z: 0}
+  inputModulate: 1
+  forceApplyStage: 2

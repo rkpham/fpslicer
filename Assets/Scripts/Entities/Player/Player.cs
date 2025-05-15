@@ -6,9 +6,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static Player;
 
 public class Player : Entity
 {
+    public delegate void OnActionPerformed(ActionData actionData);
+    public event OnActionPerformed onActionPerformed;
+
     public Animator ViewmodelAnim;
 
     public ActionData BaseAttackData;
@@ -139,9 +143,9 @@ public class Player : Entity
     }
     void PerformedJumpInput(InputAction.CallbackContext ctx)
     {
-        if (jumpRecoveryTimeLeft > 0)
+        if (jumpRecoveryTimeLeft > 0 || !IsGrounded)
             return;
-
+        
         jumping = true;
         lastJumpTime = Time.time;
         if (currentActionData == null)
@@ -225,7 +229,8 @@ public class Player : Entity
                     {
                         if (currentActionData.ManualActive)
                         {
-                            ViewmodelAnim.SetBool("SkipActive", true);
+                            if (ViewmodelAnim.runtimeAnimatorController)
+                                ViewmodelAnim.SetBool("SkipActive", true);
                             FinishAction();
                         }
                         else
@@ -238,7 +243,8 @@ public class Player : Entity
                 {
                     if (currentActionData.ManualActive)
                     {
-                        ViewmodelAnim.SetBool("SkipActive", true);
+                        if (ViewmodelAnim.runtimeAnimatorController)
+                            ViewmodelAnim.SetBool("SkipActive", true);
                         FinishAction();
                     }
                     else if (currentActionData.LowChargeDefault && chargeTimeElapsed < currentActionData.ChargeThreshold)
@@ -259,7 +265,8 @@ public class Player : Entity
                     {
                         if (currentActionData.RepeatCharge)
                         {
-                            ViewmodelAnim.SetTrigger("RestartCharge");
+                            if (ViewmodelAnim.runtimeAnimatorController)
+                                ViewmodelAnim.SetTrigger("RestartCharge");
                             StartActionCharge();
                         }
                         else
@@ -296,6 +303,7 @@ public class Player : Entity
     }
     void StartActionWindup(ActionData actionData, ActionType actionType)
     {
+        onActionPerformed?.Invoke(actionData);
         windupTimeElapsed = 0f;
         chargeTimeElapsed = 0f;
         activeTimeElapsed = 0f;
@@ -305,7 +313,8 @@ public class Player : Entity
         if (ViewmodelAnim.runtimeAnimatorController != null)
             ResetAnimVariables();
         currentActionData.OnActionWindupStarted(this);
-        ViewmodelAnim.SetBool("CancelRecovery", true);
+        if (ViewmodelAnim.runtimeAnimatorController)
+            ViewmodelAnim.SetBool("CancelRecovery", true);
 
         if (currentActionData.forceApplyStage == ActionStage.Windup)
         {
@@ -317,19 +326,24 @@ public class Player : Entity
             if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
             {
                 StartActionActive();
-                ViewmodelAnim.SetBool("SkipCharge", true);
-                ViewmodelAnim.SetBool("SkipWindupAndCharge", true);
+                if (ViewmodelAnim.runtimeAnimatorController)
+                {
+                    ViewmodelAnim.SetBool("SkipCharge", true);
+                    ViewmodelAnim.SetBool("SkipWindupAndCharge", true);
+                }
             }
             else
             {
                 StartActionCharge();
-                ViewmodelAnim.SetBool("SkipWindup", true);
+                if (ViewmodelAnim.runtimeAnimatorController)
+                    ViewmodelAnim.SetBool("SkipWindup", true);
             }
         }
         else
         {
             currentActionStage = ActionStage.Windup;
-            ViewmodelAnim.SetBool("StartWindup", true);
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetBool("StartWindup", true);
         }
     }
     public void StartActionCharge()
@@ -345,12 +359,14 @@ public class Player : Entity
         if (currentActionData.MaxChargeLength == 0 || !currentActionData.CanCharge)
         {
             StartActionActive();
-            ViewmodelAnim.SetBool("SkipCharge", true);
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetBool("SkipCharge", true);
         }
         else
         {
             currentActionStage = ActionStage.Charge;
-            ViewmodelAnim.SetBool("StartCharge", true);
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetBool("StartCharge", true);
         }
     }
     public void StartActionActive()
@@ -369,47 +385,57 @@ public class Player : Entity
         if (currentActionData.ActiveLength == 0)
         {
             FinishAction();
-            ViewmodelAnim.SetBool("SkipActive", true);
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetBool("SkipActive", true);
         }
         else
         {
             currentActionStage = ActionStage.Active;
-            ViewmodelAnim.SetBool("StartActive", true);
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetBool("StartActive", true);
         }
     }
     void FinishAction()
     {
         currentActionData.OnActionFinished(this);
-        ViewmodelAnim.SetBool("CancelRecovery", false);
+        if (ViewmodelAnim.runtimeAnimatorController)
+            ViewmodelAnim.SetBool("CancelRecovery", false);
         if (currentActionData.forceApplyStage == ActionStage.Recovery)
         {
             ApplyLocalForce(currentActionData.moveForce, currentActionData.inputModulate);
         }
         if (currentActionData.AttackChain != null && Time.time - lastAttackTime <= currentActionData.AttackComboTimeFromEnd)
         {
-            ViewmodelAnim.SetTrigger("StartChain");
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.AttackChain, ActionType.Attack);
         }
         else if (currentActionData.BlockChain != null && Time.time - lastBlockTime <= currentActionData.BlockComboTimeFromEnd)
         {
-            ViewmodelAnim.SetTrigger("StartChain");
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.BlockChain, ActionType.Block);
         }
         else if (currentActionData.JumpChain != null && Time.time - lastJumpTime <= currentActionData.JumpComboTimeFromEnd)
         {
-            ViewmodelAnim.SetTrigger("StartChain");
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.JumpChain, ActionType.Jump);
         }
         else if (currentActionData.FlourishChain != null && Time.time - lastFlourishTime <= currentActionData.FlourishComboTimeFromEnd)
         {
-            ViewmodelAnim.SetTrigger("StartChain");
+            if (ViewmodelAnim.runtimeAnimatorController)
+                ViewmodelAnim.SetTrigger("StartChain");
             StartActionWindup(currentActionData.FlourishChain, ActionType.Flourish);
         }
         else
         {
-            ResetAnimVariables();
-            ViewmodelAnim.SetBool("SkipActive", true);
-            ViewmodelAnim.SetBool("StartRecovery", true);
+            if (ViewmodelAnim.runtimeAnimatorController)
+            {
+                ResetAnimVariables();
+                ViewmodelAnim.SetBool("SkipActive", true);
+                ViewmodelAnim.SetBool("StartRecovery", true);
+            }
             attackRecoveryTimeLeft = currentActionData.AttackRecoveryTime;
             blockRecoveryTimeLeft = currentActionData.BlockRecoveryTime;
             jumpRecoveryTimeLeft = currentActionData.JumpRecoveryTime;
@@ -452,11 +478,11 @@ public class Player : Entity
         Vector3 localForce;
         if (inputModulate)
         {
-            localForce = force.x * transform.right + force.y * transform.up + force.z * transform.forward;
+            localForce = moveInputValue.x * transform.right * force.x + force.y * transform.up + moveInputValue.y * transform.forward * force.z;
         }
         else
         {
-            localForce = moveInputValue.x * transform.right * force.x + force.y * transform.up + moveInputValue.y * transform.forward * force.z;
+            localForce = force.x * transform.right + force.y * transform.up + force.z * transform.forward;
         }
         rb.linearVelocity += localForce;
     }
