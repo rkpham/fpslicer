@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Attack1
   m_EditorClassIdentifier: 
   ActionName: Attack1
-  ActionDescription: 
+  ActionNameReadable: Stab
+  ActionDescription: 'Input: Attack
+
+
+    Your basic attack.'
   AnimatorOverrideController: {fileID: 22100000, guid: 7f35dfcb0bcfe2944981f629118acb16, type: 2}
   AttackChain: {fileID: 11400000, guid: 96672fde528d5c44ea190ce426f0d331, type: 2}
   BlockChain: {fileID: 0}

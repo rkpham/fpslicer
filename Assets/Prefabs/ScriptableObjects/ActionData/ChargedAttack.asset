@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: ChargedAttack
   m_EditorClassIdentifier: 
   ActionName: ChargedAttack
-  ActionDescription: 
+  ActionNameReadable: Charged Attack
+  ActionDescription: 'Input: Attack (hold)
+
+
+    A slow but powerful attack that
+    moves you forward slightly.'
   AnimatorOverrideController: {fileID: 22100000, guid: f4dc104938b32e4499b15840f3409db4, type: 2}
   AttackChain: {fileID: 11400000, guid: 96672fde528d5c44ea190ce426f0d331, type: 2}
   BlockChain: {fileID: 0}

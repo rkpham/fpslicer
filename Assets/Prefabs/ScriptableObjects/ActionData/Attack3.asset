@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Attack3
   m_EditorClassIdentifier: 
   ActionName: Attack3
-  ActionDescription: 
+  ActionNameReadable: Stab Finisher
+  ActionDescription: 'Input: Attack > Attack > Attack
+
+
+    A finisher to your three
+    hit basic combo.'
   AnimatorOverrideController: {fileID: 22100000, guid: ad6f9ff50c5a2f045b603e69a79d0932, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}

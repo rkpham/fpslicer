@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Flourish
   m_EditorClassIdentifier: 
   ActionName: Flourish
+  ActionNameReadable: Flourish
+  ActionDescription: 'Input: Flourish
+
+
+    A quick trick with your weapon.'
   AnimatorOverrideController: {fileID: 22100000, guid: 7dfd06358e6afe34d9d2f7ced6c02b24, type: 2}
   AttackChain: {fileID: 11400000, guid: 92100beabd9035541a8d6140e40b232b, type: 2}
   BlockChain: {fileID: 0}

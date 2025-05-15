@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public abstract class ActionData : ScriptableObject
 {
     public string ActionName;
+    public string ActionNameReadable;
     [TextAreaAttribute]
     public string ActionDescription;
     public AnimatorOverrideController AnimatorOverrideController;

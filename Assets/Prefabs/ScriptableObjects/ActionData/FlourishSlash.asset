@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: FlourishSlash
   m_EditorClassIdentifier: 
   ActionName: FlourishSlash
-  ActionDescription: 
+  ActionNameReadable: Stylish Slash
+  ActionDescription: 'Input: Flourish > Attack
+
+
+    A powerful attack leading from
+    your flourish.'
   AnimatorOverrideController: {fileID: 22100000, guid: 4dba0247e9e6a544f93ad4f1492bcded, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
