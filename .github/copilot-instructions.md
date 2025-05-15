@@ -2,7 +2,7 @@
 - Project name: fpslicer
 - Unity version: Unity 6000.0.45f1
 - Active game object:
-  - Name: pDisc1
+  - Name: MainPostpro
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Postpro
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
