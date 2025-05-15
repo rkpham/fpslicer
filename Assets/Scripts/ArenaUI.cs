@@ -13,7 +13,7 @@ public class ArenaUI : MonoBehaviour
     Transform HealthBarTransform;
     UIDocument document;
     Label moveDescription;
-    Dictionary<string, ActionData> actionList = new Dictionary<string, ActionData>();
+    Dictionary<string, ActionData> performedActionList = new Dictionary<string, ActionData>();
     VisualElement pauseMenu;
     VisualElement moveList;
 
@@ -76,6 +76,8 @@ public class ArenaUI : MonoBehaviour
         moveList = document.rootVisualElement.Q("MoveList");
         HealthBarTransform = GameObject.Find("Health").transform;
 
+        moveDescription.text = "";
+
         if (PlayerEntity != null)
         {
             PlayerEntity.onDamaged += OnPlayerDamaged;
@@ -109,9 +111,9 @@ public class ArenaUI : MonoBehaviour
 
     void OnPlayerActionPerformed(ActionData actionData)
     {
-        if (!actionList.ContainsKey(actionData.ActionName))
+        if (!performedActionList.ContainsKey(actionData.ActionName))
         {
-            actionList.Add(actionData.ActionName, actionData);
+            performedActionList.Add(actionData.ActionName, actionData);
         }
     }
 
@@ -119,12 +121,16 @@ public class ArenaUI : MonoBehaviour
     {
         TemplateContainer newMoveElement = MoveListInstance.Instantiate();
         document.rootVisualElement.Q("MoveListElements").Add(newMoveElement);
+        newMoveElement.Q<Button>("MoveButton").text = actionData.ActionNameReadable;
         newMoveElement.RegisterCallback<ClickEvent, ActionData>(OnMoveClicked, actionData);
     }
 
     void OnMoveClicked(ClickEvent clickEvent, ActionData actionData)
     {
-        moveDescription.text = actionData.ActionDescription;
+        if (performedActionList.ContainsKey(actionData.ActionName))
+        {
+            moveDescription.text = actionData.ActionDescription;
+        }
     }
 
     void OnPauseContinueClicked(ClickEvent clickEvent)

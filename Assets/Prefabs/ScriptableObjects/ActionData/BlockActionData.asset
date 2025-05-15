@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: BlockActionData
   m_EditorClassIdentifier: 
   ActionName: Block
-  ActionDescription: 
+  ActionNameReadable: Block
+  ActionDescription: 'Input: Block
+
+
+    Prevents you from getting hit.'
   AnimatorOverrideController: {fileID: 22100000, guid: 0daa28da1a143b04a827172469586805, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}

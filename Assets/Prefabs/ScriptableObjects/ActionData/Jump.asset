@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   ActionName: Jump
-  ActionDescription: 
+  ActionNameReadable: Jump
+  ActionDescription: 'Input: Jump
+
+
+    A quick repositioning tool.'
   AnimatorOverrideController: {fileID: 22100000, guid: 853b483a9bd26c14987e7eda1e30a795, type: 2}
   AttackChain: {fileID: 0}
   BlockChain: {fileID: 0}
@@ -23,14 +27,14 @@ MonoBehaviour:
   WindupLength: 0
   ChargeThreshold: 0
   MaxChargeLength: 0
-  ActiveLength: 1
+  ActiveLength: 0
   AttackComboTimeFromEnd: 0
   BlockComboTimeFromEnd: 0
   JumpComboTimeFromEnd: 0
   FlourishComboTimeFromEnd: 0
   AttackRecoveryTime: 0
   BlockRecoveryTime: 0
-  JumpRecoveryTime: 0
+  JumpRecoveryTime: 1
   FlourishRecoveryTime: 0
   LowChargeDefault: {fileID: 0}
   CanCharge: 0

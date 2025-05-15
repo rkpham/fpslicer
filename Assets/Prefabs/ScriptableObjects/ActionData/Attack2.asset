@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Attack2
   m_EditorClassIdentifier: 
   ActionName: Attack2
-  ActionDescription: 
+  ActionNameReadable: Followup Stab
+  ActionDescription: 'Input: Attack > Attack
+
+
+    A follow up from your normal attack.'
   AnimatorOverrideController: {fileID: 22100000, guid: 8cea53a59bba4f4489b6ccab2697a026, type: 2}
   AttackChain: {fileID: 11400000, guid: 3956ed902bdc9f44fa65d2c5d50e2f8e, type: 2}
   BlockChain: {fileID: 0}
