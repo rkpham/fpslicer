@@ -23,6 +23,7 @@ public class IntroAnimationBehavior : MonoBehaviour
         else
         {
             manager.IncThaStage();
+            GameObject.Destroy(gameObject);
         }
     }
 }
